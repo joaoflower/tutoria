@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">	
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Creando accordion con JQuery</title>
+
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/menu.css">
+
+</head>
+<body>
+
+<div class="container">
+  	<div class="row">
+		<div class="col-md-3">
+			<ul id="accordion" class="accordion">
+				<li>
+					<div class="link"><i class="fa fa-graduation-cap"></i> Tutores <i class="fa fa-chevron-down"></i></div>
+					<ul class="submenu">
+						<li><a href="#"><i class="fa fa-user-plus"></i> Nuevo Tutor</a></li>
+						<li><a href="#"><i class="fa fa-list-alt"></i> Lista de Tutores</a></li>
+						<li><a href="#">Grupo de tutorandos</a></li>
+					</ul>
+				</li>
+				<li>
+					<div class="link"><i class="fa fa-child"></i> Tutorandos <i class="fa fa-chevron-down"></i></div>
+					<ul class="submenu">
+						<li><a href="#">Grupo de tutorandos</a></li>
+					</ul>
+				</li>
+				
+				<li>
+					<div class="link"><i class="fa fa-file-text"></i> Formatos <i class="fa fa-chevron-down"></i></div>
+					<ul class="submenu">
+						<li><a href="#">Inducción</a></li>
+						<li><a href="#">Sesión individual</a></li>
+						<li><a href="#">Sesion grupal</a></li>
+						<li><a href="#">Informe técnico académico</a></li>
+						
+					</ul>
+				</li>
+				<li>
+					<div class="link"><i class="fa fa-user"></i> Validar formatos <i class="fa fa-chevron-down"></i></div>
+					<ul class="submenu">
+						<li><a href="#">Google</a></li>
+						<li><a href="#">Google</a></li>
+						<li><a href="#">Google</a></li>
+						<li><a href="#">Google</a></li>
+						
+					</ul>
+				</li>
+
+			</ul>
+		</div>
+  		<div class="col-md-9">.col-md-6</div>
+  	</div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script src="js/menu.js"></script>
+			
+</body>
+</html>

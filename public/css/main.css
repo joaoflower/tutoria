@@ -1,0 +1,54 @@
+/* 	Tamaño del trumbowyg para el text-transform: */
+.trumbowyg-box,
+.trumbowyg-editor {		    
+    min-height: 100px;
+}
+.trumbowyg-box {
+    margin: 0px auto;
+}
+
+/* color de encabezado */
+.trumbowyg-button-pane {
+	background: #deedf7;
+}
+
+/* margen inferior */
+.form-group {
+    margin-bottom: 5px;
+}
+
+.dashboard {
+    text-align: center;
+    display: block;
+    vertical-align: middle;
+    font-weight: 200;
+    font-family: 'Lato';
+}
+
+.dashboard-content {
+    text-align: center;
+    display: inline-block;
+    color: #0070BA;
+}
+.dashboard-error {
+    text-align: center;
+    display: inline-block;
+    color: red;
+}
+
+.dashboard-body {
+    font-size: 50px;
+}
+.dashboard-header {
+    font-size: 40px;
+}
+
+body {
+	background-color: #f8f8f8;
+}
+.navbar-default {
+    background-color: #fff;
+}
+.panel-footer {
+    background-color: #fff;
+}
