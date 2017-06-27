@@ -33,8 +33,8 @@ use tutoria\Http\Requests\GrupoRequest;
 
 class GrupoController extends Controller
 {
-	private $ano_aca = '2016';
-	private $per_aca = '02';
+	private $ano_aca = '2017';
+	private $per_aca = '01';
 	public function __construct()
     {
         $this->middleware('auth');
@@ -84,7 +84,7 @@ class GrupoController extends Controller
             //return $this->edit($grupo->id);        
 
             $ano_aca_o = '2016';
-            $per_aca_o = '01';
+            $per_aca_o = '02';
 
             $grupo_o = Grupo::where('cod_prf', $request->cod_prf)->where('ano_aca', $ano_aca_o)->where('per_aca', $per_aca_o)->first();
             if($grupo_o != null) { 
@@ -117,6 +117,7 @@ class GrupoController extends Controller
         }
         $estu2 = array();
         $regular = array();
+        $regular2 = array();
         $estus = Estumat::getEstumats(Auth::user()->cod_car);
         foreach ($estus as $estu) {
             if(empty($conTutor[$estu->num_mat]))
@@ -124,7 +125,7 @@ class GrupoController extends Controller
             else if(!$conTutor[$estu->num_mat]) 
                 $estu2[$estu->num_mat] = $estu->paterno.' '.$estu->materno.' '.$estu->nombres;
         }        
-        $regular = Estumat::getRegulares(Auth::user()->cod_car);
+        $regular = Estumat::getRegulares(Auth::user()->cod_car); 
         foreach ($regular as $estu) {
             if(empty($conTutor[$estu->num_mat]))
                 $regular2[$estu->num_mat] = $estu->paterno.' '.$estu->materno.' '.$estu->nombres;

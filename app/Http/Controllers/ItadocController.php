@@ -23,8 +23,8 @@ use Laracasts\Flash\Flash;
 
 class ItadocController extends Controller
 {
-    private $ano_aca = '2016';
-	private $per_aca = '02';
+    private $ano_aca = '2017';
+	private $per_aca = '01';
 	private $grupo;
 	private $name;
     public function __construct()
