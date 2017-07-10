@@ -25,7 +25,7 @@ class Docente extends Model
                 ->table('docente')
                 ->select('cod_prf', 'cod_car', 'paterno', 'materno', 'nombres')
                 //->where('cod_car', $cod_car) // la misma carrera que es definido
-                ->whereIn('cod_car', ['16', '17', '88'])
+                ->whereIn('cod_car', ['16', '17', '87','88'])
                 ->where('cnd_act', '1')
                 ->orderBy('paterno', 'asc')
                 ->get();
@@ -34,7 +34,8 @@ class Docente extends Model
             return DB::connection('unapnet')
                 ->table('docente')
                 ->select('cod_prf', 'cod_car', 'paterno', 'materno', 'nombres')
-                ->where('cod_car', $cod_car)
+                //->where('cod_car', $cod_car)
+                ->whereIn('cod_car', [$cod_car, '87'])
                 ->where('cnd_act', '1')
                 ->orderBy('paterno', 'asc')
                 ->get();
