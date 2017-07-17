@@ -14,6 +14,7 @@
 						<li><a href="{{ route('grupo.index') }}"><i class="fa fa-list-alt"></i> Lista de Tutorías</a></li>
 					</ul>
 				</li>
+
 			@endif
 
 			@if(Auth::user()->type == 'head')
@@ -35,13 +36,9 @@
 				</li>
 				<li>
 					<div class="link"><i class="fa fa-file-text"></i> Formatos <i class="fa fa-chevron-down"></i></div>
-					<ul class="submenu">
-						<li><a href="{{ route('induccion.index') }}"><i class="fa fa-share-alt"></i>  Inducción al Estudiante</a></li>
-						<li><a href="{{ route('sesindi.index') }}"><i class="fa fa-user"></i>  Tutoria individual por sessión</a></li>
+					<ul class="submenu">						
+						<li><a href="{{ route('sesindi17.index') }}"><i class="fa fa-user"></i>  Sesión de Tutoria Individual</a></li>
 						<li><a href="{{ route('sesgru.index') }}"><i class="fa fa-group"></i>  Tutoria grupal por sessión</a></li>
-						<li><a href="{{ route('itadoc.index') }}"><i class="fa fa-file-word-o"></i>  Inf. Tec. Acad. del Tutor</a></li>						
-						<li><a href="{{ route('evaldoc.index') }}"><i class="fa fa-check-square-o"></i>  Evaluación del docente</a></li>
-						<li><a href="#"><i class="fa fa-newspaper-o"></i>  Inf. de Resultados</a></li>
 					</ul>
 				</li>
 			@endif

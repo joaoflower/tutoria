@@ -115,6 +115,12 @@
 		'as'	=> 'sesindi.destroy'
 		]);
 
+	Route::resource('sesindi17', 'Sesindi17Controller');
+	Route::get('sesindi17/{id}/destroy', [
+		'uses'	=> 'Sesindi17Controller@destroy',
+		'as'	=> 'sesindi17.destroy'
+		]);
+
 	Route::resource('sesgru', 'SesgruController');
 	Route::get('sesgru/{id}/destroy', [
 		'uses'	=> 'SesgruController@destroy',

@@ -21,8 +21,8 @@ $(function(){
 });
 $( function() {
 	$(".fechas").datepicker({
-		minDate: "2016-04-04",
-		maxDate: "2016-08-05"
+		minDate: "2017-03-01",
+		maxDate: "2017-12-31"
 	});
 });
 
