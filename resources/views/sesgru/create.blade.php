@@ -48,7 +48,11 @@
 				</table>
 			</div>
 		</div>
-
+		{!! Form::hidden('tem_ses', 'Semestre 2017-I y Sin Información') !!}
+		{!! Form::hidden('pro_ses', 'Semestre 2017-I y Sin Información') !!}
+		{!! Form::hidden('acu_ses', 'Semestre 2017-I y Sin Información') !!}
+		{!! Form::hidden('obs_ses', 'Semestre 2017-I y Sin Información') !!}
+<!--
 		<div class="form-group">
 			{!! Form::label('tem_ses', 'Temas en la sesión :', ['class' => 'col-md-2 control-label']) !!}
 			<div class="col-md-9">
@@ -72,7 +76,7 @@
 			<div class="col-md-9">
 				{!! Form::textarea('obs_ses', null, ['class' => 'form-control area-content', 'placeholder' => 'Ingrese las observaciones del tutor sobre la dinámica del grupo o algún(os) tutorando(s) en particular', 'required', 'size' => '50x3']) !!}
 			</div>
-		</div>
+		</div>-->
 		
 		<div class="form-group">
 			{!! Form::label('evalses_id', 'Evaluación de sesión :', ['class' => 'col-md-2 control-label']) !!}
@@ -80,6 +84,7 @@
 				{!! Form::select('evalses_id', $evalsess, null, ['class' => 'form-control select-estudiante', 'required', 'data-placeholder' => 'Selecione']) !!}
 			</div>
 		</div>
+
 		<div class="form-group">
 			{!! Form::label('fecha', 'Fecha de sesión :', ['class' => 'col-md-2 control-label']) !!}
 			<div class="col-md-9">

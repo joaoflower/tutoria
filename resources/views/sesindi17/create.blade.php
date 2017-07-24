@@ -25,10 +25,10 @@
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
 				<p class="form-control-static"><strong>ESTIMADO DOCENTE: </strong> La sesión se inicia con la pregunta, ¿Cómo te está yendo en la universidad?, ¿Qué problemas tienes? </p>
-				<p>De este diálogo inicial, repreguntar, ¿qué problema te afecta más?,  según las respuestas, ir marcando con (X) los indicadores de vulnerablilidad:</p>
+				<p>De este diálogo inicial, repreguntar, ¿qué problema te afecta más?:</p>
 			</div>
 		</div>
-
+<!--
 		@foreach ($areaproblemas as $areaproblema)
 		<div class="form-group">
 			<div class="col-md-1"></div>
@@ -78,7 +78,7 @@
 				</table>
 			</div>
 		</div>
-		
+	-->	
 		<div class="form-group">
 			{!! Form::label('pro_ide', 'Problemática identificada :', ['class' => 'col-md-2 control-label']) !!}
 			<div class="col-md-9">

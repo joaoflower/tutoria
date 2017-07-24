@@ -35,7 +35,7 @@
 					</ul>
 				</li>
 				<li>
-					<div class="link"><i class="fa fa-file-text"></i> Formatos <i class="fa fa-chevron-down"></i></div>
+					<div class="link"><i class="fa fa-file-text"></i> Reportes de Tutoría <i class="fa fa-chevron-down"></i></div>
 					<ul class="submenu">						
 						<li><a href="{{ route('sesindi17.index') }}"><i class="fa fa-user"></i>  Sesión de Tutoria Individual</a></li>
 						<li><a href="{{ route('sesgru.index') }}"><i class="fa fa-group"></i>  Tutoria grupal por sessión</a></li>

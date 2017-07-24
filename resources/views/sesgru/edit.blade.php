@@ -48,7 +48,12 @@
 				</table>
 			</div>
 		</div>
+		{!! Form::hidden('tem_ses', $sesgru->tem_ses) !!}
+		{!! Form::hidden('pro_ses', $sesgru->pro_ses) !!}
+		{!! Form::hidden('acu_ses', $sesgru->acu_ses) !!}
+		{!! Form::hidden('obs_ses', $sesgru->obs_ses) !!}
 
+		<!--
 		<div class="form-group">
 			{!! Form::label('tem_ses', 'Temas en la sesión :', ['class' => 'col-md-2 control-label']) !!}
 			<div class="col-md-9">
@@ -73,6 +78,7 @@
 				{!! Form::textarea('obs_ses', $sesgru->obs_ses, ['class' => 'form-control area-content', 'placeholder' => 'Ingrese las observaciones del tutor sobre la dinámica del grupo o algún(os) tutorando(s) en particular', 'required', 'size' => '50x3']) !!}
 			</div>
 		</div>
+		-->
 		
 		<div class="form-group">
 			{!! Form::label('evalses_id', 'Evaluación de sesión :', ['class' => 'col-md-2 control-label']) !!}
