@@ -155,6 +155,12 @@
 		'as'	=> 'usutut.destroy'
 		]);
 	Route::get('usutut/{cod_car}/docentes', 'UsututController@getDocentes');
+
+	Route::resource('encusati', 'EncusatiController');
+	Route::get('encusati/{id}/destroy', [
+		'uses'	=> 'EncusatiController@destroy',
+		'as'	=> 'encusati.destroy'
+		]);
 #});
 
 

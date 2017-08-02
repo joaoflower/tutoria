@@ -115,9 +115,14 @@ class GrupoController extends Controller
         foreach ($conTutorTemp as $estu) {
             $conTutor[$estu->num_mat] = true;
         }
-        $estu2 = array();
+        $estu2 = array();        
         $regular = array();
         $regular2 = array();
+
+        # Estableciendo "SELECCIONE ESTUDIANTE A "
+         $estu2["000000"] = "Seleccione un estudiante INGRESANTE para agregarlo al tutor";
+         $regular2["000000"] = "Seleccione un estudiante REGULAR para agregarlo al tutor";
+        # -------------------------------------
         $estus = Estumat::getEstumats(Auth::user()->cod_car);
         foreach ($estus as $estu) {
             if(empty($conTutor[$estu->num_mat]))

@@ -19,17 +19,25 @@ class DocgrupoController extends Controller
         $this->middleware('auth');
     }
     public function index(Request $request) {
-    	$estugrupo = Estugrupo::where('num_mat', Auth::user()->codigo)->where('cod_car', Auth::user()->cod_car)->first();
-        if($estugrupo != null) { 
-        	//$docente = $estugrupo->grupo->docente;
-            $docente = Docente::getDocente($estugrupo->grupo->cod_prf);
+
+        $estugrupos = Estugrupo::where('num_mat', Auth::user()->codigo)->where('cod_car', Auth::user()->cod_car)
+            ->with(['grupo' => function($query) {
+                $query->where('ano_aca', $this->ano_aca)->where('per_aca', $this->per_aca);
+            }])->get();
+
+        $cod_prf  = "";
+        foreach ($estugrupos as $eg) {
+            if($eg->grupo != null) {
+                $cod_prf = $eg->grupo->cod_prf;
+            }
+        }
+ 
+        if($cod_prf != null) { 
+            $docente = Docente::getDocente($cod_prf);
             $docente->name = $docente->paterno.' '.$docente->materno.', '.$docente->nombres;
-            $docente->estugrupo_id = $estugrupo->id;
-            $evalestu = $estugrupo->evalestu;
 
             return view('docgrupo.index')
-            	->with('docente', $docente)
-            	->with('evalestu', $evalestu);
+            	->with('docente', $docente);
         }
         return view('error')->with('error', 'No tiene Tutor asignado ...!');
 	}

@@ -45,16 +45,15 @@
 
 			@if(Auth::user()->type == 'student')
 				<li>
-					<div class="link"><i class="fa fa-user"></i> Tutores <i class="fa fa-chevron-down"></i></div>
+					<div class="link"><i class="fa fa-user"></i> Tutor <i class="fa fa-chevron-down"></i></div>
 					<ul class="submenu">
-						<li><a href="{{ route('docgrupo.index') }}"><i class="fa fa-user"></i> Ver Tutores</a></li>
+						<li><a href="{{ route('docgrupo.index') }}"><i class="fa fa-user"></i> Ver Tutor</a></li>
 					</ul>
 				</li>
 				<li>
-					<div class="link"><i class="fa fa-file-text"></i> Formatos <i class="fa fa-chevron-down"></i></div>
+					<div class="link"><i class="fa fa-file-text"></i> Reportes de Tutoría <i class="fa fa-chevron-down"></i></div>
 					<ul class="submenu">
-						<li><a href="{{ route('itaestu.index') }}"><i class="fa fa-file-archive-o"></i>  Inf. Tec. Acad. del Tutorado</a></li>						
-						<li><a href="{{ route('evalestu.index') }}"><i class="fa fa-check-circle-o"></i>  Evaluación del Estudiante</a></li>
+						<li><a href="{{ route('encusati.index') }}"><i class="fa fa-file-archive-o"></i> Constancia de Tutoría</a></li>						
 					</ul>
 				</li>
 			@endif
