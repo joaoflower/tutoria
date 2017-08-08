@@ -3,6 +3,7 @@
 namespace tutoria;
 
 use Illuminate\Database\Eloquent\Model;
+use tutoria\Sesindi17;
 
 use DB;
 
@@ -56,5 +57,33 @@ class Estugrupo extends Model
             ->where('grupo.per_aca', '=', $per_aca)
             ->select('num_mat')
             ->get();
+    }
+    public static function getConTutorAll($ano_aca, $per_aca) {
+        return DB::table('estugrupo')
+            ->join('grupo', 'estugrupo.grupo_id', '=', 'grupo.id')            
+            ->where('grupo.ano_aca', '=', $ano_aca)
+            ->where('grupo.per_aca', '=', $per_aca)
+            ->select('num_mat')
+            ->get();
+    }
+    public static function getSinSes($ano_aca, $per_aca) {
+
+        return DB::table('estugrupo')
+            ->leftjoin('grupo', 'estugrupo.grupo_id', '=', 'grupo.id')
+            ->select('estugrupo.id', 'num_mat')
+            ->where('grupo.ano_aca', '=', $ano_aca)
+            ->where('grupo.per_aca', '=', $per_aca)
+            ->whereNotIn('estugrupo.id', function($que) {
+                $que->select('estugrupo_id')->from('sesindi17');
+            })
+            ->get();
+        /*return DB::table('estugrupo')
+            ->join('grupo', function($join) {
+                $join->on('estugrupo.grupo_id', '=', 'grupo.id')
+                    ->where('grupo.ano_aca', '=', $ano_aca)
+                    ->where('grupo.per_aca', '=', $per_aca);
+            })
+            ->select('num_mat')
+            ->get();*/
     }
 }

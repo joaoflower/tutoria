@@ -58,4 +58,15 @@
 				</li>
 			@endif
 
+			@if(Auth::user()->type == 'psico')
+				<li>
+					<div class="link"><i class="fa fa-file-text"></i> Reportes de Tutoría <i class="fa fa-chevron-down"></i></div>
+					<ul class="submenu">						
+						<li><a href="{{ route('sesuna.index') }}"><i class="fa fa-user"></i> Sesión de Tutoria Individual</a></li>
+						<li><a href="{{ route('singrupo.index') }}"><i class="fa fa-user"></i> Estudiantes sin Tutor</a></li>
+					</ul>
+				</li>
+
+			@endif
+
 			</ul>

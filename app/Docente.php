@@ -52,7 +52,14 @@ class Docente extends Model
             ->first();
     }
     public static function getName($cod_prf) {
-        $docente = Docente::getDocente($cod_prf);
-        return $docente->paterno.' '.$docente->materno.', '.$docente->nombres;
+        if($cod_prf == '999999') {
+            return "PASTORAL UNIVERSITARIA";
+        } elseif ($cod_prf == '999998') {
+            return "PSICOPEDAGOGIA";
+        } else {
+            $docente = Docente::getDocente($cod_prf);
+            return $docente->paterno.' '.$docente->materno.', '.$docente->nombres;
+        }
+        
     }
 }

@@ -161,6 +161,17 @@
 		'uses'	=> 'EncusatiController@destroy',
 		'as'	=> 'encusati.destroy'
 		]);
+
+	Route::resource('sesuna', 'SesunaController');
+	Route::get('sesuna/{id}/destroy', [
+		'uses'	=> 'SesunaController@destroy',
+		'as'	=> 'sesuna.destroy'
+		]);
+	Route::resource('singrupo', 'SingrupoController');
+	Route::get('singrupo/{id}/destroy', [
+		'uses'	=> 'SingrupoController@destroy',
+		'as'	=> 'singrupo.destroy'
+		]);
 #});
 
 

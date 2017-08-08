@@ -18,4 +18,7 @@ class Sesindi17 extends Model
     public function itemreferidos() { 
     	return $this->belongsToMany('tutoria\Itemreferido', 'sesindi17_ref', 'sesindi_id', 'referido_id')->withPivot('enable')->withTimestamps(); 
     }
+    public function encusatis() { 
+        return $this->hasMany('tutoria\Encusati'); 
+    }
 }

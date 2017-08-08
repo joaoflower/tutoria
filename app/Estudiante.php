@@ -28,6 +28,10 @@ class Estudiante extends Model
     }
     public static function getName($num_mat) {
         $estu = Estudiante::getEstudiante($num_mat);
-        return $estu->paterno.' '.$estu->materno.', '.$estu->nombres;
+        if($estu != null) {
+            return $estu->paterno.' '.$estu->materno.', '.$estu->nombres;
+        }
+        return "";
+        
     }
 }

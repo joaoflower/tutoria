@@ -76,19 +76,30 @@ class EncusatiController extends Controller
         }*/
         #---------------------------------
 
+        # Si tutor realizó sesión
         if($this->sesindi17 != null) {
-            $docente = Docente::getName($this->cod_prf);
-            
-            # Obtener el area e item 
-            $areaspectos = Areaspecto::where('enable', true)->with('itemaspectos')->get();
-            $evalaspectos = Evalaspecto::lists('name', 'id');
-
-            return view('encusati.create')
-                ->with('docente', $docente)
-                ->with('estudiante', $this->name)
-                ->with('areaspectos', $areaspectos)
-                ->with('evalaspectos', $evalaspectos); 
+            $hasEncusati = false;
+            # Si no hay encuesta
+            foreach($this->sesindi17->encusatis as $encusati) {
+                $hasEncusati = true;
+            }
+            if(!$hasEncusati) {
+                $docente = Docente::getName($this->cod_prf);
+                
+                # Obtener el area e item 
+                $areaspectos = Areaspecto::where('enable', true)->with('itemaspectos')->get();
+                $evalaspectos = Evalaspecto::lists('name', 'id');
+                return view('encusati.create')
+                    ->with('docente', $docente)
+                    ->with('estudiante', $this->name)
+                    ->with('areaspectos', $areaspectos)
+                    ->with('evalaspectos', $evalaspectos);  
+            } else {
+                return view('encusati.index')
+                    ->with('encusatis', $this->sesindi17->encusatis);
+            }
         }
+        # Si tutor no realizó sesión
         return view('error')->with('error', 'El Tutor no realizó ninguna sesión de Tutoría');
 	}
     public function create() {
@@ -105,14 +116,40 @@ class EncusatiController extends Controller
         }
         $encusati->itemaspectos()->sync($encusati_aspecto);
 
-        $docente = Docente::getDocente($this->cod_prf);
-        return view('encusati.constancia')
-            ->with('docente', $docente)
-            ->with('estudiante', $this->name)
-            ->with('encusati', $encusati);
+        if($this->cod_prf == '999999' or $this->cod_prf == '999998') {
+            //$docente = Docente::getDocente($this->cod_prf);
+            $estudiante = Estudiante::getEstudiante(Auth::user()->codigo);
+            $docente = Docente::getName($this->cod_prf);
+            return view('encusati.constanciauna')
+                ->with('docente', $docente)
+                ->with('estudiante', $estudiante)
+                ->with('encusati', $encusati);
+        } else {
+            $docente = Docente::getDocente($this->cod_prf);
+            return view('encusati.constancia')
+                ->with('docente', $docente)
+                ->with('estudiante', $this->name)
+                ->with('encusati', $encusati);
+        }
     }
     public function show($id) {
-        
+         $encusati = Encusati::find($id);
+
+        if($this->cod_prf == '999999' or $this->cod_prf == '999998') {
+            //$docente = Docente::getDocente($this->cod_prf);
+            $estudiante = Estudiante::getEstudiante(Auth::user()->codigo);
+            $docente = Docente::getName($this->cod_prf);
+            return view('encusati.constanciauna')
+                ->with('docente', $docente)
+                ->with('estudiante', $estudiante)
+                ->with('encusati', $encusati);
+        } else {
+            $docente = Docente::getDocente($this->cod_prf);
+            return view('encusati.constancia')
+                ->with('docente', $docente)
+                ->with('estudiante', $this->name)
+                ->with('encusati', $encusati);
+        }
     }
     public function edit($id) {
     	
