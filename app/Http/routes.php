@@ -172,6 +172,13 @@
 		'uses'	=> 'SingrupoController@destroy',
 		'as'	=> 'singrupo.destroy'
 		]);
+
+	Route::resource('infoestu', 'InfoestuController');
+	Route::get('infoestu/{num_mat}/viewinfo', 'InfoestuController@viewInfo');
+
+	/*Route::get('grupo/{id}/{num_mat}/tutorado', 'GrupoController@addEstugrupo');
+	Route::get('grupo/{grupo_id}/{id}/deltutorado', 'GrupoController@delEstugrupo');*/
+
 #});
 
 

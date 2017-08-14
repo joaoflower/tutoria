@@ -37,11 +37,12 @@ class SingrupoController extends Controller
         $this->name = Auth::user()->name;
     }
     public function index(Request $request) {
+        # Obtener los estudiantes con tutoria
         $conTutorTemp = Estugrupo::getConTutorAll($this->ano_aca, $this->per_aca);
         foreach ($conTutorTemp as $estu) {
             $conTutor[$estu->num_mat] = true;
         }
-
+        # Estudiantes Matrculados
         $estumats = Estumat::select('num_mat', 'cod_car')
             ->where('per_aca', $this->per_aca)
             ->whereIn('niv_est', ['01','02','03','04'])
@@ -50,124 +51,52 @@ class SingrupoController extends Controller
                     ->where('num_mat', 'estumat2017all.num_mat');
             }])*/
             ->get();
-        
+        # Obtener los estudiantes sin tutor
         $estu2 = array(); 
         foreach ($estumats as $estu) {
             if(empty($conTutor[$estu->num_mat]))
-                $estu2[$estu->num_mat] = Estudiante::getName($estu->num_mat);
+                $estu2[$estu->num_mat] = $estu->num_mat." - ".Estudiante::getName($estu->num_mat);
             else if(!$conTutor[$estu->num_mat]) 
-                $estu2[$estu->num_mat] = Estudiante::getName($estu->num_mat);
+                $estu2[$estu->num_mat] = $estu->num_mat." - ".Estudiante::getName($estu->num_mat);
         }   
-
         $estudiantes = Collection::make($estu2);
-        dd($estudiantes);
 
-
-        /*
-        # Verificar si tiene grupo 
-        if($this->grupo != null) { 
-            if($this->grupo->estugrupos->count() > 0) {     # Si tiene tutorados
-                # Obtener 
-                $sesindi17 = null;
-                $count = 0;
-                foreach ($this->grupo->estugrupos as $eg) {
-                    $sesindi17[$count] = Sesindi17::where('estugrupo_id',$eg->id);
-                    $count++;
-                }
-
-                $sesindi17s = null;
-                if($count > 0) {
-                    $query = $sesindi17[0];
-                    for($ii = 1; $ii < $count; $ii++) {
-                        $query = $query->union($sesindi17[$ii]);
-                    }
-                    $sesindi17s = $query->get();
-                }
-                $sesindi17s->each(function($sesindi) {
-                    $sesindi->estugrupo;
-                    $sesindi->estu = Estudiante::getEstudiante($sesindi->estugrupo->num_mat);
-                    $sesindi->num_mat = $sesindi->estugrupo->num_mat;
-                    $sesindi->name = $sesindi->estu->paterno.' '.$sesindi->estu->materno.', '.$sesindi->estu->nombres;
-                });
-
-                $sesindi17s = $sesindi17s->sortBy(function($sesindi) {
-                    return $sesindi->name.$sesindi->nro_ses.$sesindi->fecha;
-                });
-
-            	return view('sesuna.index')->with('sesindi17s', $sesindi17s);
-            }
-            $sesindi17s = null;
-            return view('sesuna.index')->with('sesindi17s', $sesindi17s);
-        }
-        return view('nohayestu');*/
-	}
-    public function create() {
-        # Obtener la lista de los estudiantes sin sesión individual
-        $estugrupos = Estugrupo::getSinSes($this->ano_aca,  $this->per_aca);
-        
-        
-        /*$estumats = Estumat::select('num_mat', 'cod_car')
-            ->where('per_aca', $this->per_aca)
-            ->whereIn('niv_est', ['01','02','03','04'])
-            ->with(['estudiante' => function ($query) {
-                $query->select('paterno', 'materno', 'nombres');
-            }])
-            ->get();
-        dd($estumats);*/
-
-        # Genera un Collection($estudiantes) con la lista de los estudiantes
-		foreach ($estugrupos as $eg) {
-            $estu_tmp[$eg->id] = Estudiante::getName($eg->num_mat);
-        }
-        $estudiantes = Collection::make($estu_tmp);     
-
-        # Obtener el area e item de los problemas, y el ser referido
         $areaproblemas = Areaproblema::where('enable', true)->with('itemproblemas')->get();
         $itemreferidos = Itemreferido::where('enable', true)->get();
 
-        return view('sesuna.create')
+        return view('singrupo.create')
             ->with('docente', $this->name)
             ->with('estudiantes', $estudiantes)
             ->with('areaproblemas', $areaproblemas)
             ->with('itemreferidos', $itemreferidos);
+	}
+    public function create() {
+
     }
-    public function store(Sesindi17Request $request) {
-        # Almacenar los problemas y referidos en arrays
-        /*$sesindi17_pro = array();
-        foreach ($request->sesindi17_pro as $problema_id => $enable) {
-            $sesindi17_pro[$problema_id] = ['enable' => $enable];
-        }
-        $sesindi17_ref = array();
-        foreach ($request->sesindi17_ref as $referido_id => $enable) {
-            $sesindi17_ref[$referido_id] = ['enable' => $enable];
-        }*/
+    public function store(Request $request) {     
+        # Obtener estudiante
+        $estudiante = Estudiante::select('num_mat', 'cod_car')->where('num_mat', $request->num_mat)->first();
+        # Obtener grupo
+        $grupo = Grupo::find($this->grupo->id);
         
+        #Creando nueva Estugrupo
+        $estugrupo = new Estugrupo();
+        $estugrupo->num_mat = $estudiante->num_mat;
+        $estugrupo->cod_car = $estudiante->cod_car;
+        # Asociando al grupo
+        $estugrupo->grupo()->associate($grupo);
+        $estugrupo->save();
+
         # Creando un nuevo y grabando la sesion individual
         $sesindi17 = new Sesindi17($request->all());        
         $count = Sesindi17::where('estugrupo_id', $sesindi17->estugrupo_id)->count();        
         $sesindi17->nro_ses = $count + 1;
+        # Asociando al estugrupo
+        $sesindi17->estugrupo()->associate($estugrupo);
         $sesindi17->save();
-        //dd($sesindi17);
-
-        # Cambiando el estugrupo        
-        /*$estugrupo = Estugrupo::find($sesindi17->estugrupo_id);
-        $estugrupo->grupo_id = $this->grupo->id;
-        $Estugrupo->save();*/
-        $estugrupo = Estugrupo::find($sesindi17->estugrupo_id);
-        $grupo = Grupo::find($this->grupo->id);
-        $estugrupo->grupo()->associate($grupo);
-        $estugrupo->save();
-
-        //dd($estugrupo);
-
         
-
-        # grabando la relación muchos a muchos
-        /*$sesindi17->itemproblemas()->sync($sesindi17_pro);
-        $sesindi17->itemreferidos()->sync($sesindi17_ref);*/
-
-        Flash::success('Se ha guardado la sesión de forma satisfactoria !');
-    	return redirect()->route('sesuna.index');
+        Flash::success('Se ha guardado la sesión de forma satisfactoria, siga ingresando más sessiones <br> Para verificar el registro, ingrese en la opción <strong>Sesión de Tutoria individual</strong> !');
+    	return redirect()->route('singrupo.index');
     }
     public function show($id) {
         

@@ -64,6 +64,7 @@
 					<ul class="submenu">						
 						<li><a href="{{ route('sesuna.index') }}"><i class="fa fa-user"></i> Sesión de Tutoria Individual</a></li>
 						<li><a href="{{ route('singrupo.index') }}"><i class="fa fa-user"></i> Estudiantes sin Tutor</a></li>
+						<li><a href="{{ route('infoestu.index') }}"><i class="fa fa-user"></i> Información de Estudiantes</a></li>
 					</ul>
 				</li>
 

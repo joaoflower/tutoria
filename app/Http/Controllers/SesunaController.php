@@ -91,7 +91,7 @@ class SesunaController extends Controller
 
         # Genera un Collection($estudiantes) con la lista de los estudiantes
 		foreach ($estugrupos as $eg) {
-            $estu_tmp[$eg->id] = Estudiante::getName($eg->num_mat);
+            $estu_tmp[$eg->id] = $eg->num_mat." - ".Estudiante::getName($eg->num_mat);
         }
         $estudiantes = Collection::make($estu_tmp);     
 
