@@ -13,7 +13,7 @@ use tutoria\Estudiante;
 class EstugrupoController extends Controller
 {
     private $ano_aca = '2017';
-	private $per_aca = '01';
+	private $per_aca = '02';
     public function __construct()
     {
         $this->middleware('auth');
@@ -29,16 +29,6 @@ class EstugrupoController extends Controller
                     $estugrupo->name = $estugrupo->estu->paterno.' '.$estugrupo->estu->materno.', '.$estugrupo->estu->nombres;
 
                     $estugrupo->car_des = $estugrupo->estu->car_des;
-
-                    $estugrupo->induccion;
-
-                    $estugrupo->sesindis;
-                    $estugrupo->count_sesi = $estugrupo->sesindis->count();
-
-                    $estugrupo->itadocs;
-                    $estugrupo->count_itad = $estugrupo->itadocs->count();
-
-                    $estugrupo->evaldoc; 
                 });
                 $estugrupos = $estugrupos->sortBy(function($estugrupo) {
                     return $estugrupo->name;

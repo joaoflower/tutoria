@@ -26,7 +26,16 @@
 			@if($docente != null)
 				<p class="form-control-static"> {{$docente}}</p>
 			@else
-				<p class="form-control-static"> SIN TUTOR </p>
+				@if($estumat != null)
+					<p class="form-control-static"> 
+						SIN TUTOR
+						<a href="#" onclick="if(confirm('¿Estas seguro que quieres Asiganr tuto?')) {add_tutor();} return false;" class="btn btn-primary">
+							<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Asignar tutor
+						</a>
+					</p>
+				@else
+					<p class="form-control-static"> SIN TUTOR </p>
+				@endif
 			@endif
 			</div>
 		</div>
@@ -50,5 +59,6 @@
 			@endif
 			</div>
 		</div>
+
 		
 

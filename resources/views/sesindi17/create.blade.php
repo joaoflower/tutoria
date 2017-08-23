@@ -1,118 +1,133 @@
-@extends('layouts.app')
-@section('title', '[2017-I] Nueva sesión de Tutoria individual')
+@extends('layouts.app17')
 
-@section('aside')
-	@include('layouts.include.aside')
-@endsection
+@section('title','Tutoria individual')
 
 @section('content')
-	{!! Form::open(['route' => 'sesindi17.store', 'method' => 'POST', 'class' => 'form-horizontal']) !!}
 
-		<div class="form-group">
-			{!! Form::label('tutor', 'Tutor :', ['class' => 'col-md-2 control-label']) !!}
-			<div class="col-md-9">
-				<p class="form-control-static">{{ $docente }}</p>
-			</div>
-		</div>
-		<div class="form-group">
-			{!! Form::label('estugrupo_id', 'Tutorado', ['class' => 'col-md-2 control-label']) !!}
-			<div class="col-md-9">
-				{!! Form::select('estugrupo_id', $estudiantes, null, ['class' => 'form-control select-estudiante', 'required', 'data-placeholder' => 'Seleciones Turorado']) !!}
-			</div>
-		</div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="portlet">
+                    <div class="portlet-heading bg-success">
+                        <h3 class="portlet-title">
+                            Nueva sesión de Tutoria individual
+                        </h3>
+                        <div class="portlet-widgets">
+                            <a href="#" data-toggle="remove"><i class="ion-close-round"></i></a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div id="portlet-2" class="panel-collapse collapse in">
+                        <div class="portlet-body">
 
-		<div class="form-group">
-			<div class="col-md-1"></div>
-			<div class="col-md-10">
-				<p class="form-control-static"><strong>ESTIMADO DOCENTE: </strong> La sesión se inicia con la pregunta, ¿Cómo te está yendo en la universidad?, ¿Qué problemas tienes? </p>
-				<p>De este diálogo inicial, repreguntar, ¿qué problema te afecta más?:</p>
-			</div>
-		</div>
-<!--
-		@foreach ($areaproblemas as $areaproblema)
-		<div class="form-group">
-			<div class="col-md-1"></div>
-			<div class="col-md-10">
-				<table class="table table-striped table-bordered table-hover ">
-					<thead>
-						<tr class="success">
-							<th><strong>{{ $areaproblema->name }}</strong> - Problemas identificados por el estudiante</th>
-							<th width="80">Marque</th>
-						</tr>
-					</thead>
-					<tbody>
-					@foreach ($areaproblema->itemproblemas as $itemproblema)
-						<tr>
-							<td>{{ $itemproblema->name }}</td>
-							<td>
-								{!! Form::checkbox('sesindi17_pro['.$itemproblema->id.']') !!}	
-							</td>
-						</tr>
-					@endforeach
-					</tbody>
-				</table>
-			</div>
-		</div>
-		@endforeach
+                        {!! Form::open(['route' => 'sesindi17.store', 'method' => 'POST', 'class' => 'form-horizontal']) !!}
+                            <div class="form-group">
+                                {!! Form::label('estugrupo_id', 'Tutorado: ', ['class' => 'col-md-1 control-label']) !!}
+                                <div class="col-sm-9">
+                                    {!! Form::select('estugrupo_id', $estudiantes, null, ['class' => 'form-control select-estudiante', 'required', 'data-placeholder' => 'Selecione Tutorado para sessión']) !!}
+                                </div>
+                                <div class="col-sm-2"></div>
+                            </div>
+                            <div class="form-group">                                
+                                <div class="col-sm-1"></div>
+                                <div class="col-sm-11">
+                                    <p class="form-control-static"><strong>PROBLEMAS IDENTIFICADOS POR EL ESTUDIANTE</strong></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @foreach ($areaproblemas as $areaproblema)
+                                <div class="col-sm-4">
+                                    <table class="table table-striped table-bordered table-hover ">
+                                        <thead>
+                                            <tr class="success">
+                                                <th colspan="2"><strong>{{ $areaproblema->name }}</strong></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach ($areaproblema->itemproblemas as $itemproblema)
+                                            <tr>
+                                                <td>{{ $itemproblema->name }}</td>
+                                                <td>
+                                                    {!! Form::checkbox('sesindi17_pro['.$itemproblema->id.']') !!}  
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                @endforeach
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4">
+                                    {!! Form::textarea('pro_ide', null, ['class' => 'form-control', 'placeholder' => 'Ingrese OTROS problemas identificados por el estudiante', 'style' => 'display: none;', 'id' => 'pro_ide']) !!}
+                                    <div id="div-pro_ide" class="summernote"></div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <table class="table table-striped table-bordered table-hover ">
+                                        <thead>
+                                            <tr class="success">
+                                                <th colspan="2"><strong>El estudiante requiere ser referido a:</strong></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach ($itemreferidos as $itemreferido)
+                                            <tr>
+                                                <td>{{ $itemreferido->name }}</td>
+                                                <td>
+                                                    {!! Form::checkbox('sesindi17_ref['.$itemreferido->id.']') !!}  
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="col-sm-4">
+                                    {!! Form::label('fecha', 'Fecha de sesión :', ['class' => 'control-label']) !!}
+                                    {!! Form::input('date','fecha', null, ['class' => 'form-control fechas', 'required', 'placeholder' => 'aaaa-mm-dd']) !!}
+                                </div>
+                            </div>
 
-		<div class="form-group">
-			<div class="col-md-1"></div>
-			<div class="col-md-10">
-				<table class="table table-striped table-bordered table-hover ">
-					<thead>
-						<tr class="success">
-							<th>El estudiante requiere ser referido a:</th>
-							<th width="80">Marque</th>
-						</tr>
-					</thead>
-					<tbody>
-					@foreach ($itemreferidos as $itemreferido)
-						<tr>
-							<td>{{ $itemreferido->name }}</td>
-							<td>
-								{!! Form::checkbox('sesindi17_ref['.$itemreferido->id.']') !!}	
-							</td>
-						</tr>
-					@endforeach
-					</tbody>
-				</table>
-			</div>
-		</div>
-	-->	
-		<div class="form-group">
-			{!! Form::label('pro_ide', 'Problemática identificada :', ['class' => 'col-md-2 control-label']) !!}
-			<div class="col-md-9">
-				{!! Form::textarea('pro_ide', null, ['class' => 'form-control area-content', 'placeholder' => 'Ingrese la problemática identificada en la sesión', 'required', 'size' => '50x3']) !!}
-			</div>
-		</div>
-		
-		<div class="form-group">
-			{!! Form::label('fecha', 'Fecha de sesión :', ['class' => 'col-md-2 control-label']) !!}
-			<div class="col-md-9">
-				{!! Form::input('date','fecha', null, ['class' => 'form-control fechas', 'required', 'placeholder' => 'aaaa-mm-dd']) !!}
-			</div>
-		</div>
-		
+                            <div class="form-group m-b-0">
+                                <div class="col-sm-offset-5 col-sm-7">                                        
+                                    <a href="{{ route('sesindi17.index') }}" class="btn btn-danger btn-rounded btn-custom btn-lg m-b-5">
+                                        <i class="fa fa-times"></i> <span>Cancelar</span>
+                                    </a>
+                                    {!! Form::button('<i class="fa fa-floppy-o"></i> <span>Guardar sesión</span>', ['type' => 'submit', 'class' => 'btn btn-success btn-rounded btn-custom btn-lg m-b-5']) !!}  
+                                </div>
+                            </div>
+                        {!! Form::close() !!}
 
-		<div class="form-group">
-			<div class="col-md-6 col-md-offset-4">
-				{!! Form::button('<span class="glyphicon glyphicon-floppy-save"></span> Agregar sesión', ['type' => 'submit', 'class' => 'btn btn-success']) !!}	
-				<a href="{{ route('sesindi17.index') }}" class="btn btn-danger">
-					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar
-				</a>
-			</div>
-		</div>
-	{!! Form::close() !!}
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+        </div> 
+  
 @endsection
 @section('js')
-	<script type="text/javascript">
-		$('.select-estudiante').chosen({
-			allow_single_deselect: true
-		});
-		$('.area-content').trumbowyg({
-		    fullscreenable: false,
-		    btns: [ ['formatting'], 'btnGrp-semantic', ['link'], 'btnGrp-justify', 'btnGrp-lists']	 ,
-		    autogrow: true   
-		});
-	</script>
+    <script type="text/javascript">
+        $(document).on('ready', function(){ 
+            $('.select-estudiante').chosen({
+                allow_single_deselect: true
+            });
+            $('#div-pro_ide').summernote({
+                placeholder: 'Ingrese OTROS problemas identificados por el estudiante.',
+                disableDragAndDrop: true,
+                height: 200, 
+                minHeight: 50, 
+                maxHeight: 200, 
+                lang: 'es-ES',
+                disableResizeEditor: false,
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline']],
+                    ['color', ['color']],
+                    ['para', ['paragraph']],
+                    ['vineta', ['ul', 'ol']]
+                ],
+            });
+            $('#div-pro_ide').on('summernote.blur', function() {
+                $("#pro_ide").val($(this).summernote("code"));    
+            });
+        }); 
+    </script>
 @endsection

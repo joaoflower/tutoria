@@ -1,49 +1,48 @@
-@extends('layouts.app')
+@extends('layouts.app17')
 
-@section('title','[2017-I] Lista de sesión de Tutoria individual')
-
-@section('aside')
-	@include('layouts.include.aside')
-@endsection
+@section('title','Sesión de tutoría')
 
 @section('content')
-	
-	<table class="table table-striped table-bordered table-hover ">
-		<thead>
-			<tr class="success">
-				<th>Num.Mat.</th>
-				<th>Estudiante</th>
-				<th>Sesión</th>
-				<th>Fecha</th>
-				<th>Acción</th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach ($sesindi17s as $sesindi)
-				<tr>
-					<td>{{ $sesindi->num_mat }}</td>
-					<td>{{ ucwords(strtolower($sesindi->name)) }}</td>
-					<td>{{ $sesindi->nro_ses }}</td>
-					<td>{{ $sesindi->fecha }}</td>
-					<td>
-						<a href="{{ route('sesindi17.edit', $sesindi->id) }}" class="btn btn-warning btn-sm">
-							<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-						</a>
-						<a href="{{ route('sesindi17.destroy', $sesindi->id) }}" onclick="return confirm('¿Estas seguro que quieres eliminar?')" class="btn btn-danger btn-sm">
-							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-						</a>
-					</td>
-				</tr>
-			@endforeach
-		</tbody>
-	</table>
-	<div class="text-center">
-		
-	</div>
-@endsection
 
-@section('footer')
-	<a href="{{ route('sesindi17.create') }}" class="btn btn-primary">
-		<span class="glyphicon glyphicon-file" aria-hidden="true"></span> Nueva Sessión
-	</a>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="portlet">
+                    <div class="portlet-heading bg-primary">
+                        <h3 class="portlet-title">
+                            Lista de sesiones de Tutoria individual
+                        </h3>
+                        <div class="portlet-widgets">
+                            <a href="#" data-toggle="remove"><i class="ion-close-round"></i></a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div id="portlet-2" class="panel-collapse collapse in">
+                        <div class="portlet-body">
+
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12" id="sesindi17s">
+                                    @include('sesindi17.index-sesindi17s')
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="form-group m-b-0">
+                                        <div class="col-sm-offset-5 col-sm-7">
+                                            <a href="{{ route('sesindi17.create') }}" class="btn btn-primary btn-rounded btn-custom btn-lg m-b-5">
+                                                <i class="fa fa-user-plus"></i><span> Nueva sesión individual</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+        </div> 
+  
+@endsection
+@section('js')
+
 @endsection

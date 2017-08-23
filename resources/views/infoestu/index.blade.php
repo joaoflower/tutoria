@@ -19,7 +19,7 @@
 			</div>
 		</div>
 		<div id="informacion">
-			
+
 		</div>
 	{!! Form::close() !!}
 	
@@ -46,5 +46,18 @@
 		  	})
 		  	.always(function() { });
 		});
+		function add_tutor() {
+			var num_mat = $('#num_mat').val();
+			$.get(`infoestu/${num_mat}/addtutor`, function(response, state) {
+				$('#informacion').html(response);
+			})
+			.done(function() { })
+		  	.fail(function( jqXHR, textStatus, errorThrown ) {
+		    	console.log(jqXHR);
+		    	console.log(textStatus);
+		    	console.log(errorThrown);
+		  	})
+		  	.always(function() { });
+		}
 	</script>
 @endsection

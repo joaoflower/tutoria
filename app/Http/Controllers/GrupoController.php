@@ -34,7 +34,7 @@ use tutoria\Http\Requests\GrupoRequest;
 class GrupoController extends Controller
 {
 	private $ano_aca = '2017';
-	private $per_aca = '01';
+	private $per_aca = '02';
 	public function __construct()
     {
         $this->middleware('auth');
@@ -45,6 +45,7 @@ class GrupoController extends Controller
 	}
     public function create() {
         $docs = Docente::getDocentes(Auth::user()->cod_car);
+        $doc2[] = "";
     	foreach ($docs as $doc) {
 		    $doc2[$doc->cod_prf] = $doc->paterno.' '.$doc->materno.' '.$doc->nombres;
 		}
@@ -80,10 +81,8 @@ class GrupoController extends Controller
             $grupo->per_aca = $this->per_aca;
             $grupo->save();
 
-            //$sesgruase->sesgru()->associate($sesgru);
-            //return $this->edit($grupo->id);        
-
-            $ano_aca_o = '2016';
+            // Recuperar anteriores estudiantes
+            /*$ano_aca_o = '2016';
             $per_aca_o = '02';
 
             $grupo_o = Grupo::where('cod_prf', $request->cod_prf)->where('ano_aca', $ano_aca_o)->where('per_aca', $per_aca_o)->first();
@@ -99,7 +98,7 @@ class GrupoController extends Controller
                         $estugrupo->save();                    
                     }
                 }
-            }
+            }*/
         } else {
             $grupo = Grupo::find($grupoDoc->id);
         }
@@ -119,9 +118,9 @@ class GrupoController extends Controller
         $regular = array();
         $regular2 = array();
 
-        # Estableciendo "SELECCIONE ESTUDIANTE A "
-         $estu2["000000"] = "Seleccione un estudiante INGRESANTE para agregarlo al tutor";
-         $regular2["000000"] = "Seleccione un estudiante REGULAR para agregarlo al tutor";
+        # para: data-placeholder
+        $estu2[] = "";
+        $regular2[""] = "";
         # -------------------------------------
         $estus = Estumat::getEstumats(Auth::user()->cod_car);
         foreach ($estus as $estu) {
@@ -169,6 +168,18 @@ class GrupoController extends Controller
         return redirect()->route('grupo.index');
 
     }
+    public function dropGrupo(Request $request, $id) {
+        if($request->ajax()) {
+            // Eliminando el grupo y estugrupos
+            $grupo = Grupo::find($id);
+            foreach ($grupo->estugrupos as $estugrupo ) {
+                $estugrupo->delete();
+            }
+            $grupo->delete();
+            $grupos = Grupo::getGrupos($this->ano_aca, $this->per_aca, Auth::user()->cod_car);
+            return view('grupo.index-grupos')->with('grupos', $grupos); 
+        } 
+    }
     public function addEstugrupo(Request $request, $id, $num_mat) {
         if($request->ajax()) {
             $estugrupo = new Estugrupo();
@@ -180,7 +191,7 @@ class GrupoController extends Controller
 
             $estugrupos = Estugrupo::getEstudiantes($id);
 
-            return view('grupo.tutorados')->with('estugrupos', $estugrupos);
+            return view('grupo.createstu-estus')->with('estugrupos', $estugrupos);
         }
     }
     public function delEstugrupo(Request $request, $grupo_id, $id) {
@@ -192,7 +203,7 @@ class GrupoController extends Controller
 
             $estugrupos = Estugrupo::getEstudiantes($grupo_id);
 
-            return view('grupo.tutorados')->with('estugrupos', $estugrupos);
+            return view('grupo.createstu-estus')->with('estugrupos', $estugrupos);
         }
     }
     public function storestu(Request $request, $id) {

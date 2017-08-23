@@ -81,6 +81,19 @@ class InfoestuController extends Controller
                 ->with('encusati', $encusati);
         }
     }
+    public function addTutor(Request $request, $num_mat) {
+        if($request->ajax()) {
+            # Add tutor
+            $estumat = Estumat::select('num_mat', 'cod_car', 'niv_est')->where('num_mat', $num_mat)->where('per_aca', $this->per_aca)->first(); 
+            $estugrupo = new Estugrupo();
+            $estugrupo->grupo_id = $this->grupo->id;
+            $estugrupo->num_mat = $num_mat;
+            $estugrupo->cod_car = $estumat->cod_car;
+            $estugrupo->save();
+            #----------
+            return $this->viewInfo($request, $num_mat);
+        }
+    }
     public function create() {
 
     }

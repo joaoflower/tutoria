@@ -99,6 +99,10 @@
 	Route::get('grupo/{id}/{num_mat}/tutorado', 'GrupoController@addEstugrupo');
 	Route::get('grupo/{grupo_id}/{id}/deltutorado', 'GrupoController@delEstugrupo');
 
+	Route::get('grupo/{id}/drop', 'GrupoController@dropGrupo');
+	Route::get('grupo/{id}/{num_mat}/addestudiante', 'GrupoController@addEstugrupo');
+	Route::get('grupo/{grupo_id}/{id}/dropestudiante', 'GrupoController@delEstugrupo');
+
 	Route::resource('estugrupo', 'EstugrupoController');
 
 	Route::resource('docgrupo', 'DocgrupoController');
@@ -120,6 +124,7 @@
 		'uses'	=> 'Sesindi17Controller@destroy',
 		'as'	=> 'sesindi17.destroy'
 		]);
+	Route::get('sesindi17/{id}/drop', 'Sesindi17Controller@dropSesindi17');
 
 	Route::resource('sesgru', 'SesgruController');
 	Route::get('sesgru/{id}/destroy', [
@@ -175,6 +180,10 @@
 
 	Route::resource('infoestu', 'InfoestuController');
 	Route::get('infoestu/{num_mat}/viewinfo', 'InfoestuController@viewInfo');
+	Route::get('infoestu/{num_mat}/addtutor', 'InfoestuController@addTutor');
+
+	Route::resource('plan', 'PlanController');
+	Route::resource('seguimiento', 'SeguimientoController');
 
 	/*Route::get('grupo/{id}/{num_mat}/tutorado', 'GrupoController@addEstugrupo');
 	Route::get('grupo/{grupo_id}/{id}/deltutorado', 'GrupoController@delEstugrupo');*/

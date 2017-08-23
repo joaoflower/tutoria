@@ -25,9 +25,9 @@ class Sesindi17Request extends Request
     {
         return [ 
             'estugrupo_id'   => 'required',
-            'pro_ide'   => 'min:20|max:1000|required',
+            //'pro_ide'   => 'min:20|max:1000|required',
             'fecha'   => 'date|required',
-            //'sesindi17_pro'   => 'required',
+            'sesindi17_pro'   => 'required',
         ];
     }
 }

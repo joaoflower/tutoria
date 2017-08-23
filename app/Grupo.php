@@ -34,7 +34,8 @@ class Grupo extends Model
             ->where('grupo.per_aca', $per_aca)    // OJO: Los periodos ya no se consideran
             ->where('grupo.cod_car', $cod_car)
             ->orderBy('paterno', 'ASC')
-            ->paginate(10);
+            //->paginate(10);
+            ->get();
     }
     public static function getByDocente($ano_aca, $per_aca, $cod_car, $cod_prf) {
         return DB::table('grupo')            
