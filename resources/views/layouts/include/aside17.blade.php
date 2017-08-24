@@ -38,11 +38,8 @@
             @endif
 
             @if(Auth::user()->type == 'student')
-            <li class="has-submenu"><a href="#"><i class="ion-ios-people"></i> <span class="nav-label">Tutor</span></a>
-                <ul class="list-unstyled">
-                    <li><a href="{{ route('docgrupo.index') }}"><i class="ion-compose"></i> Ver tutor</a></li>
-                </ul>
-            </li>
+            <li><a href="{{ route('perfile.index') }}"><i class="ion-briefcase"></i> <span class="nav-label">Perfil</span></a></li>
+            <li><a href="{{ route('docgrupo.index') }}"><i class="ion-person"></i> <span class="nav-label">Tutor</span></a></li>
             <li class="has-submenu"><a href="#"><i class="ion-university"></i> <span class="nav-label">Reportes de Tutoría</span></a>
                 <ul class="list-unstyled">
                     <li><a href="{{ route('encusati.index') }}"><i class="ion-compose"></i> Constancia de Tutoría</a></li>

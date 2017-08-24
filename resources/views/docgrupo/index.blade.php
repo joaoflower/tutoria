@@ -1,35 +1,34 @@
-@extends('layouts.app')
+@extends('layouts.app17')
 
-@section('title','Lista de Tutores')
-
-@section('aside')
-	@include('layouts.include.aside')
-@endsection
+@section('title','Sin tutor')
 
 @section('content')
-	
-	<table class="table table-striped table-bordered table-hover ">
-		<thead>
-			<tr class="success">
-				<th>Docente</th>
-				<th>Escuela Profesional</th>
-				<th>Acción</th>
-			</tr>
-		</thead>
-		<tbody>
-			@if ($docente != null)
-				<tr>
-					<td>{{ ucwords(strtolower($docente->name)) }}</td>
-					<td>{{ ucwords(strtolower($docente->car_des)) }}</td>
-					<td>
 
-					</td>
-				</tr>
-			@endif
-		</tbody>
-	</table>
-	<div class="text-center">
-		
-	</div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="portlet">
+                    <div class="portlet-heading bg-primary">
+                        <h3 class="portlet-title">
+                            Tutor para el estudiante
+                        </h3>
+                        <div class="portlet-widgets">
+                            <a href="#" data-toggle="remove"><i class="ion-close-round"></i></a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div id="portlet-2" class="panel-collapse collapse in">
+                        <div class="portlet-body">
+
+                        	<div class="alert alert-info alert-dismissible" role="alert">
+							  	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							  	El tutor que tiene asigando para el siguiente semestre es: <br>
+					            Docente <strong>{{ $docente->name }}</strong> de la escuela profesional de <strong>{{ $docente->car_des }}</strong>.
+							</div>
+
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+        </div> 
+  
 @endsection
-

@@ -13,7 +13,7 @@ use tutoria\Docente;
 class DocgrupoController extends Controller
 {
     private $ano_aca = '2017';
-	private $per_aca = '01';
+	private $per_aca = '02';
     public function __construct()
     {
         $this->middleware('auth');
@@ -39,7 +39,7 @@ class DocgrupoController extends Controller
             return view('docgrupo.index')
             	->with('docente', $docente);
         }
-        return view('error')->with('error', 'No tiene Tutor asignado ...!');
+        return view('nohaydoc');
 	}
     public function create() {
     	

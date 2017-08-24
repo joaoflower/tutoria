@@ -10,7 +10,10 @@ class Estudiante extends Model
 {
 	protected $connection = "unapnet";
     protected $table = "estudiante"; 
+    protected $primaryKey = 'num_mat';
     protected $fillable = ['num_mat', 'cod_car', 'paterno', 'materno', 'nombres']; 
+    public $incrementing = false;
+    public $timestamps = false;
 
     public function estumats() { 
     	return $this->hasMany('tutoria\Estumat', 'num_mat', 'num_mat')->where('cod_car',$this->cod_car); 
@@ -18,6 +21,9 @@ class Estudiante extends Model
     public function carrera() { 
     	return $this->belongsTo('tutoria\Carrera', 'cod_car', 'cod_car'); 
     } 
+    public function tutorado() {
+        return $this->hasOne('tutoria\Tutorado', 'num_mat', 'num_mat')->where('cod_car',$this->cod_car);
+    }
     public static function getEstudiante($num_mat) {
         return DB::connection('unapnet')
             ->table('estudiante')
@@ -34,4 +40,5 @@ class Estudiante extends Model
         return "";
         
     }
+
 }

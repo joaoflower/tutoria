@@ -184,6 +184,7 @@
 
 	Route::resource('plan', 'PlanController');
 	Route::resource('seguimiento', 'SeguimientoController');
+	Route::resource('perfile', 'TutoradoController');
 
 	/*Route::get('grupo/{id}/{num_mat}/tutorado', 'GrupoController@addEstugrupo');
 	Route::get('grupo/{grupo_id}/{id}/deltutorado', 'GrupoController@delEstugrupo');*/
