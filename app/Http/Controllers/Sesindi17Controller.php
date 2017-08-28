@@ -19,6 +19,7 @@ use tutoria\Sesindi17;
 use tutoria\Itemproblema;
 use tutoria\Areaproblema;
 use tutoria\Itemreferido;
+use tutoria\Tutor;
 use Laracasts\Flash\Flash;
 
 
@@ -28,12 +29,14 @@ class Sesindi17Controller extends Controller
 	private $per_aca = '02';
     private $grupo;
     private $name;
+    private $tutor;
 
     public function __construct()
     {
         $this->middleware('auth');
         $this->grupo = Grupo::where('cod_prf', Auth::user()->codigo)->where('ano_aca', $this->ano_aca)->where('per_aca', $this->per_aca)->first();        
         $this->name = Docente::getName(Auth::user()->codigo);
+        $this->tutor = Tutor::find(Auth::user()->codigo);
     }
     public function getSesindi17s() {
         $sesindi17 = null;
@@ -64,18 +67,20 @@ class Sesindi17Controller extends Controller
         return $sesindi17s;
     }
     public function index(Request $request) {
-        /*$grupo = Grupo::where('cod_prf', Auth::user()->codigo)->where('ano_aca', $this->ano_aca)->where('per_aca', $this->per_aca)->first();*/
+        if($this->tutor != null) {
+            # Verificar si tiene grupo 
+            if($this->grupo != null) { 
+                if($this->grupo->estugrupos->count() > 0) {     # Si tiene tutorados
+                    # Obtener 
+                    $sesindi17s = $this->getSesindi17s();
 
-        # Verificar si tiene grupo 
-        if($this->grupo != null) { 
-            if($this->grupo->estugrupos->count() > 0) {     # Si tiene tutorados
-                # Obtener 
-                $sesindi17s = $this->getSesindi17s();
-
-                return view('sesindi17.index')->with('sesindi17s', $sesindi17s);
+                    return view('sesindi17.index')->with('sesindi17s', $sesindi17s);
+                }
             }
+            return view('nohayestu');
+        } else {
+            return redirect()->route('perfild.create');
         }
-        return view('nohayestu');
     }
     public function create() {
         # Obtener la lista de los estudiantes del grupo y agrega atributo name(PaMaNo)

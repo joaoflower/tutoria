@@ -25,12 +25,13 @@ use Laracasts\Flash\Flash;
 class SesgruController extends Controller
 {
 	private $ano_aca = '2017';
-	private $per_aca = '01';
+	private $per_aca = '02';
     public function __construct()
     {
         $this->middleware('auth');
     }
     public function index(Request $request) {
+        
         $grupo = Grupo::where('cod_prf', Auth::user()->codigo)->where('ano_aca', $this->ano_aca)->where('per_aca', $this->per_aca)->first();
         if($grupo != null) { 
             if($grupo->estugrupos->count() > 0) {

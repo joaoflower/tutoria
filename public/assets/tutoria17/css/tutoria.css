@@ -35,7 +35,7 @@ table.dataTable tbody td {
 .plan >.form-group {
     margin-bottom: 5px;
 }
-/*-----------------------*/
+/*-----------Botton in Table------------*/
 .icon-edit, .icon-drop, .icon-show {
 	padding: 0px 5px;
 	font-size: 16px;
@@ -131,4 +131,61 @@ table.dataTable tbody td {
   100% { transform: rotate(360deg); transform: rotate(360deg); }
 }
 
-/*------------------------*/
+/*---------Perfil-e y d---------------*/
+.profile-desk .designation {  
+  margin-bottom: 15px;
+}
+.bg-picture {
+  min-height: 150px;
+}
+.nav.nav-tabs.profile-tabs>li>a {
+  padding: 10px 30px;
+}
+.nav.nav-tabs+.tab-content,.tabs-vertical-env .tab-content {
+  padding: 20px;
+}
+.profile-desk h1 {
+  margin: 10px 0 5px 0;
+}
+.profile-desk h3 {
+  margin-top: 10px;  
+}
+/*---------tutorados---------------*/
+.panel-tutorado {
+  padding: 10px 20px;
+}
+.hr-tutorado {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.social-links-tutorado li a {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  display: inline-block;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  font-size: 18px;
+  background-color: #FFFFFF;
+}
+.facebook {
+  color: #3b5998;
+  border: 1px solid #3b5998;
+}
+.twitter {
+  color: #1da1f2;
+  border: 1px solid #1da1f2;
+}
+.linkedin {
+  color: #00a0dc;
+  border: 1px solid #00a0dc;
+}
+.envelope {
+  color: #000000;
+  border: 1px solid #000000; 
+}
+/*---------- Plan text---------------*/
+textarea.form-control {
+  min-height: 75px;
+}

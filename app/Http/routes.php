@@ -183,8 +183,29 @@
 	Route::get('infoestu/{num_mat}/addtutor', 'InfoestuController@addTutor');
 
 	Route::resource('plan', 'PlanController');
+	Route::post('plan2', [
+		'uses'	=>	'PlanController@store2',
+		'as'	=>	'plan.store2'
+		]);
+	Route::post('plan3', [
+		'uses'	=>	'PlanController@store3',
+		'as'	=>	'plan.store3'
+		]);
+	Route::post('plan4', [
+		'uses'	=>	'PlanController@store4',
+		'as'	=>	'plan.store4'
+		]);
+
 	Route::resource('seguimiento', 'SeguimientoController');
+
 	Route::resource('perfile', 'TutoradoController');
+	Route::post('perfile2', [
+		'uses'	=>	'TutoradoController@store2',
+		'as'	=>	'perfile.store2'
+		]);
+	# POST 	/photos 	store 	photos.store
+
+	Route::resource('perfild', 'TutorController');
 
 	/*Route::get('grupo/{id}/{num_mat}/tutorado', 'GrupoController@addEstugrupo');
 	Route::get('grupo/{grupo_id}/{id}/deltutorado', 'GrupoController@delEstugrupo');*/

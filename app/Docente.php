@@ -9,7 +9,10 @@ class Docente extends Model
 {
 	protected $connection = "unapnet";
     protected $table = "docente"; 
+    protected $primaryKey = 'cod_prf';
     protected $fillable = ['cod_prf', 'cod_car', 'paterno', 'materno', 'nombres']; 
+    public $incrementing = false;
+    public $timestamps = false;
 
     public function grupos() { 
     	return $this->hasMany('tutoria\Grupo', 'cod_prf', 'cod_prf'); 
@@ -17,6 +20,9 @@ class Docente extends Model
     public function carrera() { 
     	return $this->belongsTo('tutoria\Carrera', 'cod_car', 'cod_car'); 
     } 
+    public function tutor() {
+        return $this->hasOne('tutoria\Tutor', 'cod_prf', 'cod_prf')->where('cod_car',$this->cod_car);
+    }
 
     public static function getDocentes($cod_car) {
     	//return Docente::where('cod_car', $cod_car)->get();

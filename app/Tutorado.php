@@ -8,7 +8,7 @@ class Tutorado extends Model
 {
     protected $table = "tutorado"; 
     protected $primaryKey = 'num_mat';
-    protected $fillable = ['cod_car', 'paterno', 'materno', 'nombres', 'fec_nac', 'emer_nom', 'emer_cel', 'disca_if', 'disca_des', 'enfer_if', 'enfer_des', 'salud_if', 'salud_des', 'pro_dep', 'pro_pro', 'pro_dis', 'com_par', 'con_vive', 'resi_dir', 'resi_ref', 'resi_tipo', 'depe_eco', 'situ_aca', 'ayu_tutoria', 'celular', 'email', 'url', 'facebook', 'twitter', 'linkedin', 'skype', 'instagram']; 
+    protected $fillable = ['cod_car', 'paterno', 'materno', 'nombres', 'fec_nac', 'emer_nom', 'emer_cel', 'disca_if', 'disca_des', 'enfer_if', 'enfer_des', 'salud_if', 'salud_des', 'pro_dep', 'pro_pro', 'pro_dis', 'com_par', 'con_vive', 'resi_dir', 'resi_ref', 'resi_tipo', 'depe_eco', 'situ_aca', 'ayu_tutoria', 'celular', 'email', 'url', 'facebook', 'twitter', 'linkedin']; 
     public $incrementing = false;
     public $timestamps = true;
 
@@ -19,10 +19,10 @@ class Tutorado extends Model
         return $this->hasMany('tutoria\Familia', 'num_mat', 'num_mat'); 
     }
     public function itemhabitos() { 
-        return $this->belongsToMany('tutoria\Itemhabito', 'tutorando_hab', 'num_mat', 'habito_id')->withPivot('enable')->withTimestamps(); 
+        return $this->belongsToMany('tutoria\Itemhabito', 'tutorado_hab', 'num_mat', 'habito_id')->withPivot('enable')->withTimestamps(); 
     }
     public function itemhobbies() { 
-        return $this->belongsToMany('tutoria\Itemhobby', 'tutorando_hob', 'num_mat', 'hobby_id')->withPivot('enable')->withTimestamps(); 
+        return $this->belongsToMany('tutoria\Itemhobby', 'tutorado_hob', 'num_mat', 'hobby_id')->withPivot('enable')->withTimestamps(); 
     }
 
 }

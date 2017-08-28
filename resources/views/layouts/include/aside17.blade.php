@@ -27,6 +27,7 @@
             @endif
 
             @if(Auth::user()->type == 'teacher')
+            <li><a href="{{ route('perfild.index') }}"><i class="ion-briefcase"></i> <span class="nav-label">Perfil</span></a></li>
             <li><a href="{{ route('estugrupo.index') }}"><i class="ion-ios-people"></i> <span class="nav-label">Tutorados</span></a></li>
             <li class="has-submenu"><a href="#"><i class="ion-university"></i> <span class="nav-label">Reportes de Tutoría</span></a>
                 <ul class="list-unstyled">

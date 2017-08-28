@@ -19,6 +19,11 @@
                     <div id="portlet-2" class="panel-collapse collapse in">
                         <div class="portlet-body">
 
+                            <div class="alert alert-info alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <strong>Seguimiento Individual: </strong> Aún no esta activo el seguimiento.
+                            </div>
+
                             
                         </div>
                     </div>
