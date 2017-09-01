@@ -40,5 +40,16 @@ class Estudiante extends Model
         return "";
         
     }
+    public static function getNamestu( $num_mat, $cod_car ) {
+        $estudiante = Estudiante::select('paterno', 'materno', 'nombres')
+                ->where('num_mat', $num_mat)->where('cod_car', $cod_car)->first();
+        if($estudiante != null) {
+            return $estudiante->paterno.' '.$estudiante->materno.', '.$estudiante->nombres;
+        }
+        return "";
+        
+    }
+
+    
 
 }

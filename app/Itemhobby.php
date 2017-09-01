@@ -9,7 +9,7 @@ class Itemhobby extends Model
     protected $table = "itemhobby"; 
     protected $fillable = ['name', 'enable'];
 
-    public function tutorandos() { 
-    	return $this->belongsToMany('tutoria\Tutorando', 'tutorando_hob')->withPivot('enable')->withTimestamps(); 
+    public function tutorados() { 
+    	return $this->belongsToMany('tutoria\Tutorado', 'tutorado_hob')->withPivot('enable')->withTimestamps(); 
     }
 }

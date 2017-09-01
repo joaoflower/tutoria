@@ -9,7 +9,10 @@ class Carrera extends Model
 {
     protected $connection = "unapnet";
     protected $table = "carrera"; 
+    protected $primaryKey = 'cod_car';
     protected $fillable = ['cod_car', 'car_des']; 
+    public $incrementing = false;
+    public $timestamps = false;
 
     public function estudiantes() { 
     	return $this->hasMany('tutoria\Estudiante', 'cod_car', 'cod_car'); 

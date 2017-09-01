@@ -37,6 +37,20 @@ class Grupo extends Model
             //->paginate(10);
             ->get();
     }
+    public static function getGrupoEstu($ano_aca, $per_aca, $cod_car) {
+        # Muy lento
+        return DB::table('grupo')            
+            ->select('grupo.id', 'grupo.cod_prf', 'docente.paterno', 'docente.materno', 'docente.nombres', 'estugrupo.num_mat', 'estudiante.paterno', 'estudiante.materno', 'estudiante.nombres')
+            ->join('unapnet.docente', 'grupo.cod_prf', '=', 'docente.cod_prf')
+            ->join('estugrupo', 'grupo.id', '=', 'estugrupo.grupo_id')
+            ->join('unapnet.estudiante', 'estugrupo.num_mat', '=', 'estudiante.num_mat')
+            ->where('grupo.ano_aca', $ano_aca)
+            ->where('grupo.per_aca', $per_aca)    // OJO: Los periodos ya no se consideran
+            ->where('grupo.cod_car', $cod_car)
+            ->orderBy('grupo.id', 'ASC')
+            //->paginate(10);
+            ->get();
+    }
     public static function getByDocente($ano_aca, $per_aca, $cod_car, $cod_prf) {
         return DB::table('grupo')            
             ->select('id')

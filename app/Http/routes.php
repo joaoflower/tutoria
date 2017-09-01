@@ -50,7 +50,7 @@
 	Route::get('nohaydoc', [
 		'uses'	=>	'TutoriaController@nohayDoc',
 		'as'	=>	'nohaydoc']);
-
+	#------------Grupo----------------------------
 	Route::resource('grupo', 'GrupoController'); 
 	Route::get('grupo/{id}/createstu', [
 		'uses'	=> 'GrupoController@createstu',
@@ -103,6 +103,8 @@
 	Route::get('grupo/{id}/{num_mat}/addestudiante', 'GrupoController@addEstugrupo');
 	Route::get('grupo/{grupo_id}/{id}/dropestudiante', 'GrupoController@delEstugrupo');
 
+	Route::get('grupot/tutortutorado', 'GrupoController@tutorTutorado')->name('grupot.tutortutorado');
+	#-----------------------------------------------------------------------
 	Route::resource('estugrupo', 'EstugrupoController');
 
 	Route::resource('docgrupo', 'DocgrupoController');
@@ -181,7 +183,7 @@
 	Route::resource('infoestu', 'InfoestuController');
 	Route::get('infoestu/{num_mat}/viewinfo', 'InfoestuController@viewInfo');
 	Route::get('infoestu/{num_mat}/addtutor', 'InfoestuController@addTutor');
-
+	#-------------------Plan----------------------
 	Route::resource('plan', 'PlanController');
 	Route::post('plan2', [
 		'uses'	=>	'PlanController@store2',
@@ -196,6 +198,17 @@
 		'as'	=>	'plan.store4'
 		]);
 
+	Route::post('plane/updateevaluacion', 'PlanController@updateEvaluacion')->name('planc.updateevaluacion');
+
+	Route::get('planc/cronograma', 'PlanController@createCronograma')->name('plan.cronograma');
+	Route::get('planc/{objetivo}/addobjetivo', 'PlanController@addObjetivo');	
+
+	Route::post('planc/storeobjetivo', 'PlanController@storeObjetivo')->name('planc.storeobjetivo');
+	Route::post('planc/updateobjetivo', 'PlanController@updateObjetivo')->name('planc.updateobjetivo');
+	Route::post('planc/storeactividad', 'PlanController@storeActividad')->name('planc.storeactividad');
+	Route::post('planc/getactividad', 'PlanController@getActividad')->name('planc.getactividad');
+	Route::post('planc/updateactividad', 'PlanController@updateActividad')->name('planc.updateactividad');
+	#---------------------------------------------------
 	Route::resource('seguimiento', 'SeguimientoController');
 
 	Route::resource('perfile', 'TutoradoController');

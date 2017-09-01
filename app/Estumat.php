@@ -20,7 +20,7 @@ class Estumat extends Model
     	return $this->belongsTo('tutoria\Estudiante', 'num_mat', 'num_mat')->where('cod_car',$this->cod_car);
     } 
     public static function getEstumats($cod_car) {
-        $per_aca = "01";
+        $per_aca = "02";
         if($cod_car == '88') {
             return DB::connection('unapnet')
                 ->table('estumat2017all')
@@ -58,7 +58,7 @@ class Estumat extends Model
     	
     }
     public static function getRegulares($cod_car) {
-        $per_aca = "01";
+        $per_aca = "02";
         if($cod_car == '88' ) {
             return DB::connection('unapnet')
                 ->table('estumat2017all')

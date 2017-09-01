@@ -36,9 +36,12 @@ table.dataTable tbody td {
     margin-bottom: 5px;
 }
 /*-----------Botton in Table------------*/
-.icon-edit, .icon-drop, .icon-show {
+.icon-new .icon-edit, .icon-drop, .icon-show {
 	padding: 0px 5px;
-	font-size: 16px;
+	font-size: 18px;
+}
+.icon-new {
+  color: #337ab7 !important;
 }
 .icon-edit {
 	color: #31b0d5 !important;
@@ -188,4 +191,10 @@ table.dataTable tbody td {
 /*---------- Plan text---------------*/
 textarea.form-control {
   min-height: 75px;
+}
+/*---------- Cronograma ---------------*/
+.btn-cronograma {
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
 }

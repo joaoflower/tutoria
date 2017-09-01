@@ -17,21 +17,17 @@
             @endif
 
             @if(Auth::user()->type == 'head')
-            <li class="has-submenu"><a href="#"><i class="ion-university"></i> <span class="nav-label">Tutoría</span></a>
-                <ul class="list-unstyled">
-                    <li><a href="{{ route('plan.index')  }}"><i class="ion-document-text"></i> Plan de Tutoría</a></li>
-                    <li><a href="{{ route('grupo.create') }}"><i class="ion-person-add"></i> Nuevo Tutor</a></li>
-                    <li><a href="{{ route('grupo.index') }}"><i class="ion-grid"></i> Lista de Tutores</a></li>
-                </ul>
-            </li>
+            <li class="has-submenu"><a href="{{ route('plan.index')  }}"><i class="ion-document-text"></i> <span class="nav-label">Plan de Tutoría</span><span class="badge bg-success">Nuevo</span></a></li>
+            <li class="has-submenu"><a href="{{ route('grupo.index') }}"><i class="ion-person-add"></i> <span class="nav-label">Tutores</span><span class="badge bg-success">Nuevo</span></a></li>
+            <li class="has-submenu"><a href="{{ route('grupot.tutortutorado') }}"><i class="ion-person-add"></i> <span class="nav-label">Tutor y Tutorados</span><span class="badge bg-success">Nuevo</span></a></li>
             @endif
 
             @if(Auth::user()->type == 'teacher')
-            <li><a href="{{ route('perfild.index') }}"><i class="ion-briefcase"></i> <span class="nav-label">Perfil</span></a></li>
+            <li><a href="{{ route('perfild.index') }}"><i class="ion-briefcase"></i> <span class="nav-label">Perfil</span><span class="badge bg-success">Nuevo</span></a></li>
             <li><a href="{{ route('estugrupo.index') }}"><i class="ion-ios-people"></i> <span class="nav-label">Tutorados</span></a></li>
             <li class="has-submenu"><a href="#"><i class="ion-university"></i> <span class="nav-label">Reportes de Tutoría</span></a>
                 <ul class="list-unstyled">
-                    <li><a href="{{ route('sesindi17.index') }}"><i class="ion-compose"></i> Sesión de Tutoria Individual</a></li>
+                    <li><a href="{{ route('sesindi17.index') }}"><i class="ion-compose"></i> Sesión de Tutoria Individual<span class="badge bg-success">Nuevo</span></a></li>
                     <li><a href="{{ route('sesgru.index') }}"><i class="ion-compose"></i> Tutoria grupal por sessión</a></li>
                     <li><a href="{{ route('seguimiento.index')  }}"><i class="ion-document-text"></i> Seguimiento Individual</a></li>
                 </ul>
@@ -39,8 +35,8 @@
             @endif
 
             @if(Auth::user()->type == 'student')
-            <li><a href="{{ route('perfile.index') }}"><i class="ion-briefcase"></i> <span class="nav-label">Perfil</span></a></li>
-            <li><a href="{{ route('docgrupo.index') }}"><i class="ion-person"></i> <span class="nav-label">Tutor</span></a></li>
+            <li><a href="{{ route('perfile.index') }}"><i class="ion-briefcase"></i> <span class="nav-label">Perfil</span><span class="badge bg-success">Nuevo</span></a></li>
+            <li><a href="{{ route('docgrupo.index') }}"><i class="ion-person"></i> <span class="nav-label">Tutor</span><span class="badge bg-success">Nuevo</span></a></li>
             <li class="has-submenu"><a href="#"><i class="ion-university"></i> <span class="nav-label">Reportes de Tutoría</span></a>
                 <ul class="list-unstyled">
                     <li><a href="{{ route('encusati.index') }}"><i class="ion-compose"></i> Constancia de Tutoría</a></li>

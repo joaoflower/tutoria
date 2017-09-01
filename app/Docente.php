@@ -68,4 +68,13 @@ class Docente extends Model
         }
         
     }
+    public static function getNamedoc( $cod_prf ) {
+        $docente = Docente::select('paterno', 'materno', 'nombres')
+                ->where('cod_prf', $cod_prf)->first();
+        if($docente != null) {
+            return $docente->paterno.' '.$docente->materno.', '.$docente->nombres;
+        }
+        return "";
+        
+    }
 }

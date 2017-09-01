@@ -11,6 +11,8 @@ use Auth;
 use tutoria\Plan;
 use tutoria\Planfactor;
 use tutoria\Itemfactor;
+use tutoria\Planobjetivo;
+use tutoria\Planactividad;
 use Laracasts\Flash\Flash;
 
 
@@ -30,8 +32,10 @@ class PlanController extends Controller
     }
     public function index(Request $request) {
         if($this->plan != null) {
-            //return view('plan.index'); 
-            return redirect()->route('plan.create');
+            $plan = Plan::find($this->plan->id);
+            $planfactores = Planfactor::where('plan_id', $this->plan->id)->with(['itemfactor', 'itemindicadores'])->get();
+            $planobjetivos = Planobjetivo::where('plan_id', $this->plan->id)->with('actividades')->get();
+            return view('plan.index')->with('plan', $plan)->with('planfactores', $planfactores)->with('planobjetivos', $planobjetivos);
         } else {     
             return redirect()->route('plan.create');            
         }        
@@ -131,7 +135,7 @@ class PlanController extends Controller
             $pfi = $this->getPfiitem($itemfactor->itemindicadores);
         }
 
-        Flash::success('Se ha guardado de forma satisfactoria !');
+        //Flash::success('Se ha guardado de forma satisfactoria !');
         return view('plan.create')->with('itemfactor', $itemfactor)->with('route', 'plan.store2')
             ->with('fortaleza', $fortaleza)->with('pfi', $pfi);
     }
@@ -150,7 +154,7 @@ class PlanController extends Controller
             $pfi = $this->getPfiitem($itemfactor->itemindicadores);
         }
 
-        Flash::success('Se ha guardado de forma satisfactoria !');
+        //Flash::success('Se ha guardado de forma satisfactoria !');
         return view('plan.create')->with('itemfactor', $itemfactor)->with('route', 'plan.store3')
             ->with('fortaleza', $fortaleza)->with('pfi', $pfi);
     }
@@ -169,26 +173,90 @@ class PlanController extends Controller
             $pfi = $this->getPfiitem($itemfactor->itemindicadores);
         }
 
-        Flash::success('Se ha guardado de forma satisfactoria !');
+        //Flash::success('Se ha guardado de forma satisfactoria !');
         return view('plan.create')->with('itemfactor', $itemfactor)->with('route', 'plan.store4')
             ->with('fortaleza', $fortaleza)->with('pfi', $pfi);
     }
     public function store4(Request $request) {     
         $this->storing($request, 4);
 
-        Flash::success('Se ha guardado de forma satisfactoria !');
-        return view('plan.createactividad');
+        //Flash::success('Se ha guardado de forma satisfactoria !');
+        $planobjetivos = Planobjetivo::where('plan_id', $this->plan->id)->with('actividades')->get();
+        return view('plan.cronograma')->with('planobjetivos', $planobjetivos);
     }
     public function show($id) {
         
     }
     public function edit($id) {
-    	
+    	return redirect()->route('plan.create');
     }
     public function update(Request $request, $id) {
         
     }
-    public function destroy($id) {
-    	
+    public function updateEvaluacion(Request $request) {
+        if($request->ajax()) {
+            $plan = Plan::find( $this->plan->id );
+            $plan->evaluacion = $request->get('evaluacion');
+            $plan->asistentes = $request->get('asistentes');
+            $plan->save();
+        }
+    }
+
+    public function createCronograma() {
+        $planobjetivos = Planobjetivo::where('plan_id', $this->plan->id)->with('actividades')->get();
+    	return view('plan.cronograma')->with('planobjetivos', $planobjetivos);
+    }
+    public function addObjetivo(Request $request) {
+        if($request->ajax()) {
+            $planobjetivo = new Planobjetivo();
+            $planobjetivo->plan_id = $this->plan->id;
+            $planobjetivo->objetivo = $objetivo;
+            $planobjetivo->save();
+
+            $planobjetivos = Planobjetivo::where('plan_id', $this->plan->id)->with('actividades')->get();
+            return view('plan.cronograma-det')->with('planobjetivos', $planobjetivos);
+        }
+    }
+    public function storeObjetivo(Request $request) {
+        if($request->ajax()) {
+            $planobjetivo = new Planobjetivo();
+            $planobjetivo->plan_id = $this->plan->id;
+            $planobjetivo->objetivo = $request->get('objetivo');
+            $planobjetivo->save();
+
+            return view('plan.cronograma-objetivo')->with('planobjetivo', $planobjetivo);
+        }
+    }
+    public function updateObjetivo(Request $request) {
+        if($request->ajax()) {
+            $planobjetivo = Planobjetivo::find( $request->get('objetivo_id') );
+            $planobjetivo->objetivo = $request->get('objetivo');
+            $planobjetivo->save();
+        }
+    }
+    public function storeActividad(Request $request) {
+        if($request->ajax()) {
+            $planactividad = new Planactividad($request->all());
+            $planactividad->save();
+
+            return view('plan.cronograma-actividad')->with('planactividad', $planactividad);
+        }
+    }
+    public function getActividad(Request $request) {
+        if($request->ajax()) {
+            $pa = Planactividad::find( $request->get('actividad_id') );
+            return response()->json( ['actividad' => $pa->actividad, 'uni_med' => $pa->uni_med, 'meta' => $pa->meta,
+                'mes1' => $pa->mes1, 'mes2' => $pa->mes2, 'mes3' => $pa->mes3, 'mes4' => $pa->mes4, 'mes5' => $pa->mes5, 
+                'responsable' => $pa->responsable ]);
+        }
+    }
+    public function updateActividad(Request $request) {
+        if($request->ajax()) {
+            $planactividad = Planactividad::find( $request->get('actividad_id') );
+            $planactividad->fill($request->all());
+            $planactividad->save();
+            
+            return view('plan.cronograma-actividad-det')->with('planactividad', $planactividad);
+        }
     }
 }

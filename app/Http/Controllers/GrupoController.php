@@ -405,6 +405,22 @@ class GrupoController extends Controller
         return view('grupo.index')->with('grupos', $grupos);*/
     }
 
-    
-    
+    # get Tutor y tutorado
+    public function tutorTutorado() {
+        
+        $grupos = Grupo::select('id', 'cod_prf')
+            ->where('cod_car', Auth::user()->cod_car)->where('ano_aca', $this->ano_aca)->where('per_aca', $this->per_aca)
+            ->with('estugrupos')->get();
+        if($grupos->count() > 0) {
+            $grupos->each( function( $grupo ) { 
+                $grupo->docente = Docente::getNamedoc($grupo->cod_prf);
+                if($grupo->estugrupos->count() > 0) {
+                    $grupo->estugrupos->each( function( $estugrupo ) {
+                        $estugrupo->estudiante = Estudiante::getNamestu($estugrupo->num_mat, $estugrupo->cod_car);
+                    } );
+                }
+            } );
+        }
+        return view('grupo.tutor-tutorado')->with('grupos', $grupos);
+    } 
 }
