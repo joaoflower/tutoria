@@ -25,12 +25,18 @@ class UsututController extends Controller
     }
     public function index(Request $request) {
     	$usuheads = User::getHeads();
+        $carreras = Carrera::pluck('car_des', 'cod_car');
+        $carreras->put("","");
+        $items = $carreras->all();
+        ksort($items);
+        $carreras = collect($items);
 
     	return view('usutut.index')
-            ->with('usuheads', $usuheads);
+            ->with('usuheads', $usuheads)->with('carreras', $carreras);
 	} 
     public function create() {
-    	$carreras = Carrera::lists('car_des', 'cod_car');
+    	$carreras = Carrera::lists('car_des', 'cod_car');        
+
     	return view('usutut.create')
     		->with('carreras', $carreras);
 
@@ -41,7 +47,7 @@ class UsututController extends Controller
     		return response()->json($docentes);
     	}
     }
-    public function store(UserRequest $request) {        
+    public function store(UserRequest $request) {  
         $usunew = new User($request->all());
 
         $usunew->name = Docente::getName($request->codigo);
@@ -78,5 +84,40 @@ class UsututController extends Controller
 
         Flash::error('Se ha borrado el usuario de forma exitosa');
         return redirect()->route('usutut.index');
+    }
+    public function storeCoordinador(UserRequest $request) {  
+        if($request->ajax()) {
+            $usunew = new User($request->all());
+            $usunew->name = Docente::getName($request->get('codigo'));
+            $usunew->type = 'head';
+            $usunew->password = bcrypt($request->get('password'));
+            $usunew->save();
+
+            $usuheads = User::getHeads();
+            return view('usutut.index-coordinador')->with('usuheads', $usuheads);
+        }
+    }
+    public function dropCoordinador(Request $request) {  
+        if($request->ajax()) {
+            $usuhead = User::find($request->get('coordinador_id'));
+            $usuhead->delete();
+
+            $usuheads = User::getHeads();
+            return view('usutut.index-coordinador')->with('usuheads', $usuheads);
+        }
+    }
+    public function getCoordinador(Request $request) {  
+        if($request->ajax()) {
+            $usuhead = User::find($request->get('coordinador_id'));
+            return response()->json( ['name' => $usuhead->name, 'email' => $usuhead->email, 'username' => $usuhead->username]);
+        }
+    }
+    public function updateCoordinador(UserEditRequest $request) {
+        if($request->ajax()) {
+            $usuhead = User::find($request->get('coordinador_id'));
+            $usuhead->fill($request->all());
+            $usuhead->password = bcrypt($request->password);
+            $usuhead->save();
+        }
     }
 }

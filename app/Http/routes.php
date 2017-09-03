@@ -156,12 +156,18 @@
 		'uses'	=> 'EvaldocController@destroy',
 		'as'	=> 'evaldoc.destroy'
 		]);
+	#----------- Usuarios----------------
 	Route::resource('usutut', 'UsututController');
 	Route::get('usutut/{id}/destroy', [
 		'uses'	=> 'UsututController@destroy',
 		'as'	=> 'usutut.destroy'
 		]);
 	Route::get('usutut/{cod_car}/docentes', 'UsututController@getDocentes');
+	Route::post('usututc/storecoordinador', 'UsututController@storeCoordinador')->name('usututc.storecoordinador');
+	Route::post('usututc/dropcoordinador', 'UsututController@dropCoordinador')->name('usututc.dropcoordinador');
+	Route::post('usututc/getcoordinador', 'UsututController@getCoordinador')->name('usututc.getcoordinador');
+	Route::post('usututc/updatecoordinador', 'UsututController@updateCoordinador')->name('usututc.updatecoordinador');
+	#-----------------------------------------------------
 
 	Route::resource('encusati', 'EncusatiController');
 	Route::get('encusati/{id}/destroy', [

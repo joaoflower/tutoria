@@ -198,3 +198,9 @@ textarea.form-control {
   border: none;
   font-size: 18px;
 }
+/*---------- Button Icon Table ---------------*/
+.btn-icon-table {
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+}
