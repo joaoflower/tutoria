@@ -12,6 +12,7 @@ use tutoria\Grupo;
 use tutoria\Estugrupo;
 use tutoria\Estudiante;
 use tutoria\Estumat;
+use tutoria\Esturiesgo;
 use tutoria\Induccion;
 use tutoria\Iteminduc;
 use tutoria\Procinduc;
@@ -28,6 +29,7 @@ use tutoria\Sesgru;
 use tutoria\Carrera;
 use tutoria\User;
 use Auth;
+use tutoria\Tutor;
 use Laracasts\Flash\Flash; 
 use tutoria\Http\Requests\GrupoRequest; 
 
@@ -35,13 +37,20 @@ class GrupoController extends Controller
 {
 	private $ano_aca = '2017';
 	private $per_aca = '02';
+    private $tutor;
+
 	public function __construct()
     {
         $this->middleware('auth');
+        $this->tutor = Tutor::find(Auth::user()->codigo);
     }
     public function index() {
-    	$grupos = Grupo::getGrupos($this->ano_aca, $this->per_aca, Auth::user()->cod_car);
-		return view('grupo.index')->with('grupos', $grupos); 
+        if($this->tutor != null) {
+        	$grupos = Grupo::getGrupos($this->ano_aca, $this->per_aca, Auth::user()->cod_car);
+    		return view('grupo.index')->with('grupos', $grupos); 
+        } else {
+            return redirect()->route('perfild.create');
+        } 
 	}
     public function create() {
         $docs = Docente::getDocentes(Auth::user()->cod_car);
@@ -106,6 +115,11 @@ class GrupoController extends Controller
         return redirect()->route('grupo.edit', $grupo->id);
     }
     public function edit($id) {
+        $conTutor = array();
+        $estu2 = array();                
+        $regular2 = array();
+        $riesgo2 = array();
+        #------------------------------
         $grupo = Grupo::find($id);
         $grupo->nameDocente = Docente::getName($grupo->cod_prf);
 
@@ -113,32 +127,38 @@ class GrupoController extends Controller
         $conTutorTemp = Estugrupo::getConTutor(Auth::user()->cod_car, $this->ano_aca, $this->per_aca);
         foreach ($conTutorTemp as $estu) {
             $conTutor[$estu->num_mat] = true;
-        }
-        $estu2 = array();        
-        $regular = array();
-        $regular2 = array();
+        }       
 
         # para: data-placeholder
-        $estu2[] = "";
+        $estu2[""] = "";
         $regular2[""] = "";
+        $riesgo2[""] = "";
         # -------------------------------------
         $estus = Estumat::getEstumats(Auth::user()->cod_car);
         foreach ($estus as $estu) {
             if(empty($conTutor[$estu->num_mat]))
-                $estu2[$estu->num_mat] = $estu->paterno.' '.$estu->materno.' '.$estu->nombres;
+                $estu2[$estu->num_mat] = $estu->num_mat.' - '.$estu->paterno.' '.$estu->materno.' '.$estu->nombres;
             else if(!$conTutor[$estu->num_mat]) 
-                $estu2[$estu->num_mat] = $estu->paterno.' '.$estu->materno.' '.$estu->nombres;
+                $estu2[$estu->num_mat] = $estu->num_mat.' - '.$estu->paterno.' '.$estu->materno.' '.$estu->nombres;
         }        
         $regular = Estumat::getRegulares(Auth::user()->cod_car); 
         foreach ($regular as $estu) {
             if(empty($conTutor[$estu->num_mat]))
-                $regular2[$estu->num_mat] = $estu->paterno.' '.$estu->materno.' '.$estu->nombres;
+                $regular2[$estu->num_mat] = $estu->num_mat.' - '.$estu->paterno.' '.$estu->materno.' '.$estu->nombres;
             else if(!$conTutor[$estu->num_mat]) 
-                $regular2[$estu->num_mat] = $estu->paterno.' '.$estu->materno.' '.$estu->nombres;
+                $regular2[$estu->num_mat] = $estu->num_mat.' - '.$estu->paterno.' '.$estu->materno.' '.$estu->nombres;
         }        
+        $riesgo = Esturiesgo::getEsturiesgo( $this->ano_aca, $this->per_aca, Auth::user()->cod_car); 
+        foreach ($riesgo as $estu) {
+            if(empty($conTutor[$estu->num_mat]))
+                $riesgo2[$estu->num_mat] = $estu->num_mat.' - '.$estu->paterno.' '.$estu->materno.' '.$estu->nombres;
+            else if(!$conTutor[$estu->num_mat]) 
+                $riesgo2[$estu->num_mat] = $estu->num_mat.' - '.$estu->paterno.' '.$estu->materno.' '.$estu->nombres;
+        }
         
         $estudiantes = Collection::make($estu2);
         $regulares = Collection::make($regular2);
+        $riesgos = Collection::make($riesgo2);
 
         //dd($estu2);
 
@@ -150,6 +170,7 @@ class GrupoController extends Controller
             ->with('grupo',$grupo)
             ->with('estudiantes', $estudiantes)
             ->with('regulares', $regulares)
+            ->with('riesgos', $riesgos)
             ->with('estugrupos', $estugrupos);
     }
     public function update(Request $request, $id) {
@@ -186,7 +207,14 @@ class GrupoController extends Controller
             $estugrupo->grupo_id = $id;
             $estugrupo->num_mat = $num_mat;
             //$estugrupo->cod_car = Auth::user()->cod_car;
-            $estugrupo->cod_car = Estumat::getCod_car($num_mat);
+            $temp = Estumat::getCod_carR($num_mat);
+            if($temp == null) {
+                $temp = Esturiesgo::getCod_carR($num_mat);
+            } 
+            $estugrupo->cod_car = $temp->cod_car;
+
+            
+
             $estugrupo->save();
 
             $estugrupos = Estugrupo::getEstudiantes($id);
@@ -407,20 +435,23 @@ class GrupoController extends Controller
 
     # get Tutor y tutorado
     public function tutorTutorado() {
-        
-        $grupos = Grupo::select('id', 'cod_prf')
-            ->where('cod_car', Auth::user()->cod_car)->where('ano_aca', $this->ano_aca)->where('per_aca', $this->per_aca)
-            ->with('estugrupos')->get();
-        if($grupos->count() > 0) {
-            $grupos->each( function( $grupo ) { 
-                $grupo->docente = Docente::getNamedoc($grupo->cod_prf);
-                if($grupo->estugrupos->count() > 0) {
-                    $grupo->estugrupos->each( function( $estugrupo ) {
-                        $estugrupo->estudiante = Estudiante::getNamestu($estugrupo->num_mat, $estugrupo->cod_car);
-                    } );
-                }
-            } );
-        }
-        return view('grupo.tutor-tutorado')->with('grupos', $grupos);
+        if($this->tutor != null) {
+            $grupos = Grupo::select('id', 'cod_prf')
+                ->where('cod_car', Auth::user()->cod_car)->where('ano_aca', $this->ano_aca)->where('per_aca', $this->per_aca)
+                ->with('estugrupos')->get();
+            if($grupos->count() > 0) {
+                $grupos->each( function( $grupo ) { 
+                    $grupo->docente = Docente::getNamedoc($grupo->cod_prf);
+                    if($grupo->estugrupos->count() > 0) {
+                        $grupo->estugrupos->each( function( $estugrupo ) {
+                            $estugrupo->estudiante = Estudiante::getNamestu($estugrupo->num_mat, $estugrupo->cod_car);
+                        } );
+                    }
+                } );
+            }
+            return view('grupo.tutor-tutorado')->with('grupos', $grupos);
+        } else {
+            return redirect()->route('perfild.create');
+        } 
     } 
 }

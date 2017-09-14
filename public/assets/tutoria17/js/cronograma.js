@@ -11,25 +11,7 @@ $(function(){
         $("#objetivo").val( $(this).data('objetivo') );
         $("#plan-objetivo").modal();
     }
-    $("#new-objetivo").on( "click", function() {
-        $("#store-objetivo").css("display","inline-block");
-        $("#update-objetivo").css("display","none");
-        $("#objetivo-id").val(0);
-        $("#objetivo").val("");
-        $("#plan-objetivo").modal();
-    });
-    $("#store-objetivo").on( "click", function() {
-        var objetivo = $("#objetivo").val();
-        var data = { 'objetivo': objetivo};
-        $.post("/planc/storeobjetivo", data)
-            .done( function(response, status) {                    
-                $( "#cronograma" ).append( response );
-                $(".edit-objetivo").on( "click", editObjetivo );
-                $(".new-actividad").on( "click", newActividad );
-            });
-    });
-    $(".edit-objetivo").on( "click", editObjetivo );        
-    $("#update-objetivo").on( "click", function() {
+    function updateObjetivo( event ) {
         var objetivo = $("#objetivo").val();
         var objetivo_id = $("#objetivo-id").val();
         var data = { 'objetivo_id': objetivo_id, 'objetivo': objetivo };
@@ -38,8 +20,7 @@ $(function(){
                 $( '#objetivo-' + objetivo_id ).text("OBJETIVO: " + objetivo);
                 $( '#button-' + objetivo_id ).data('objetivo', objetivo);
             });
-    });      
-
+    }
     function newActividad( event ) {
         $("#store-actividad").css("display","inline-block");
         $("#update-actividad").css("display","none");
@@ -49,8 +30,7 @@ $(function(){
         $('input[type=checkbox]').prop('checked', false);
         $("#plan-actividad").modal();
     }
-    $(".new-actividad").on( "click", newActividad );
-    $("#store-actividad").on( "click", function() {
+    function storeActividad( event ) {
         var objetivo_id = $("#objetivo-id").val();
         var actividad = $("#actividad").val();
         var uni_med = $("#uni_med").val();
@@ -66,8 +46,8 @@ $(function(){
             .done(function(response, status) {
                 $( "#tbody-" + objetivo_id ).append( response );
                 $(".edit-actividad").on( "click", editActividad );
-            });            
-    });
+            });
+    }
     function editActividad( event ) {
         $("#store-actividad").css("display","none");
         $("#update-actividad").css("display","inline-block");
@@ -89,8 +69,7 @@ $(function(){
             }); 
         $("#plan-actividad").modal();
     }
-    $(".edit-actividad").on( "click", editActividad );
-    $("#update-actividad").on( "click", function() {
+    function updateActividad( event ) {
         var actividad_id = $("#actividad-id").val();
         var actividad = $("#actividad").val();
         var uni_med = $("#uni_med").val();
@@ -107,5 +86,11 @@ $(function(){
                 $( '#tr-' + actividad_id ).html( response );
                 $(".edit-actividad").on( "click", editActividad );
             });
-    });
+    }
+    $(".edit-objetivo").on( "click", editObjetivo );        
+    $("#update-objetivo").on( "click", updateObjetivo );    
+    $(".new-actividad").on( "click", newActividad );
+    $("#store-actividad").on( "click", storeActividad );    
+    $(".edit-actividad").on( "click", editActividad );
+    $("#update-actividad").on( "click", updateActividad );
 });

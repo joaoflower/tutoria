@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>@yield('title', 'Dashboard') | Sistema de Tutoría</title>
+	<meta name="csrf-token" content="{{ csrf_token() }}">
+	<link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+	<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}" />
+
+	<style>
+		body {
+		    margin: 0;
+		}
+	
+		.background, .background > div {
+		    position: fixed;
+		    top: 0;
+		    width: 100%;
+		    height: 100%;
+		}
+		.background > div {
+		    background-repeat: no-repeat,no-repeat;
+		    background-position: center center,center center;
+		    background-size: cover,cover;
+		}
+		.backgroundImage {
+		    background-image: url("https://i.pinimg.com/originals/99/20/42/99204203ec13cbf4289869588817676c.jpg");
+		}
+		.background-overlay {
+		    background: rgba(0,0,0,.55);
+		}
+
+		.outer {
+		    display: table;
+		    position: absolute;
+		    height: 100%;
+		    width: 100%;
+		}
+		.middle {
+		    display: table-cell;
+		    vertical-align: middle;
+		}
+		.inner {
+		    margin-left: auto;
+		    margin-right: auto;
+		    min-height: 300px;
+		    min-width: 250px;
+		    max-width: 300px;
+		    padding: 40px;
+		    margin-bottom: 30px;
+		    background-color: #fff;
+		    -webkit-box-shadow: 0 2px 3px rgba(0,0,0,.55);
+		    -moz-box-shadow: 0 2px 3px rgba(0,0,0,.55);
+		    box-shadow: 0 2px 3px rgba(0,0,0,.55);
+		    border: 1px solid rgba(0,0,0,.4);
+		    text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<div class="background">
+		<div class="backgroundImage"></div>
+		<div class="background-overlay"></div>
+	</div>
+	<div class="outer">
+		<div class="middle">
+			<div class="inner">
+				<p>saludos</p>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>

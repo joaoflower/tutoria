@@ -27,13 +27,21 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    {!! Form::label('num_mat', 'Ingresantes :', ['class' => 'col-md-2 control-label']) !!}
+                                    {!! Form::label('num_mat', 'Estudiantes 1er semestre :', ['class' => 'col-md-2 control-label']) !!}
                                     <div class="col-sm-4">
                                         {!! Form::select('num_mat', $estudiantes, null, ['class' => 'form-control select-estudiante', 'required', 'data-placeholder' => 'Seleciones un estudiante para agregarlo']) !!}
                                     </div>
-                                    {!! Form::label('num_matRe', 'Regulares :', ['class' => 'col-md-2 control-label']) !!}
+                                    {!! Form::label('num_matRe', 'Estudiantes regulares :', ['class' => 'col-md-2 control-label']) !!}
                                     <div class="col-sm-4">
                                         {!! Form::select('num_matRe', $regulares, null, ['class' => 'form-control select-estudiante', 'required', 'data-placeholder' => 'Seleciones un estudiante para agregarlo']) !!}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    {!! Form::label('num_matRi', 'Estudiantes en Riesgo :', ['class' => 'col-md-2 control-label']) !!}
+                                    <div class="col-sm-4">
+                                        {!! Form::select('num_matRi', $riesgos, null, ['class' => 'form-control select-estudiante', 'required', 'data-placeholder' => 'Seleciones un estudiante para agregarlo']) !!}
+                                    </div>
+                                    <div class="col-sm-6">                                        
                                     </div>
                                 </div>
                             {!! Form::close() !!}
@@ -85,6 +93,19 @@
             .always(function() { });
         });
         $('#num_matRe').change(event => {
+            $.get(`${event.target.value}/addestudiante`, function(response, state) {
+                $('#estudiantes').html(response);
+                $('#datatable').dataTable();
+            })
+            .done(function() { })
+            .fail(function( jqXHR, textStatus, errorThrown ) {
+                console.log(jqXHR);
+                console.log(textStatus);
+                console.log(errorThrown);
+            })
+            .always(function() { });
+        });
+        $('#num_matRi').change(event => {
             $.get(`${event.target.value}/addestudiante`, function(response, state) {
                 $('#estudiantes').html(response);
                 $('#datatable').dataTable();

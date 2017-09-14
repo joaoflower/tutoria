@@ -17,7 +17,7 @@ use Laracasts\Flash\Flash;
 class UsututController extends Controller
 {
     private $ano_aca = '2017';
-	private $per_aca = '01';
+	private $per_aca = '02';
 
     public function __construct()
     {

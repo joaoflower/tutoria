@@ -27,4 +27,12 @@ class Carrera extends Model
             ->where('cod_car', $cod_car)
             ->first();
     }
+    public static function getCar_des($cod_car) {
+        $carrera = Carrera::getcarrera($cod_car);
+        if($carrera != null) {
+            return $carrera->car_des;
+        }
+        return "";
+        
+    }
 }

@@ -4,6 +4,11 @@
 
 @section('content')
 
+        <div class="alert alert-info alert-dismissible" role="alert" style="font-size: 16px;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>La información que nos brindaras será de uso exclusivo del sistema de Tutoría y nos ayudará a ayudarte.</strong>
+        </div>
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="portlet">

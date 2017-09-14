@@ -20,5 +20,8 @@ class Sesindi17 extends Model
     }
     public function encusatis() { 
         return $this->hasMany('tutoria\Encusati'); 
+    }    
+    public function sesindi17refs() { 
+        return $this->hasMany('tutoria\Sesindi17ref', 'sesindi_id'); 
     }
 }

@@ -43,10 +43,9 @@ class TutorController extends Controller
             $tutor->fill($request->all());        
             $tutor->save();
         } else {
-            # Obtenido datos de estudiante
+            # Obtenido datos del docente
             $docente = Docente::select('cod_prf', 'cod_car', 'paterno', 'materno', 'nombres')
-                ->where('cod_prf', Auth::user()->codigo)->where('cod_car', Auth::user()->cod_car)->first();
-            
+                ->where('cod_prf', Auth::user()->codigo)->first();
             # creando el tutorado
             $tutor = new Tutor($request->all());  
             $tutor->cod_prf = $docente->cod_prf;

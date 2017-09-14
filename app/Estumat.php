@@ -98,6 +98,13 @@ class Estumat extends Model
             ->first()
             ->cod_car;
     }
+    public static function getCod_carR($num_mat) {
+        return DB::connection('unapnet')
+            ->table('estumat2017all')           
+            ->select('cod_car')
+            ->where('num_mat', $num_mat)
+            ->first();
+    }
     public static function getSingrupo($ano_aca, $per_aca) {
 
         return DB::connection('unapnet')

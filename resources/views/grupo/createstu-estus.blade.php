@@ -14,8 +14,8 @@
                                                 <td>{{ ucwords(strtolower($estugrupo->paterno.' '.$estugrupo->materno.', '.$estugrupo->nombres)) }}</td>
                                                 <td>{{ ucwords(strtolower($estugrupo->car_des)) }}</td>
                                                 <td>
-                                                    <a href="#" onclick="dropEstudiante({{ $estugrupo->id }})" class="icon-drop" data-toggle="tooltip" data-placement="top" title="Eliminar">
-                                                        <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i>
+                                                    <a href="#" onclick="dropEstudiante({{ $estugrupo->id }})" class="icon-drop btn-icon-table" data-toggle="tooltip" data-placement="top" title="Borrar">
+                                                        <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> <span>Borrar</span>
                                                     </a>
                                                 </td>
                                             </tr>

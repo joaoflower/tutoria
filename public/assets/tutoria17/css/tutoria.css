@@ -204,3 +204,6 @@ textarea.form-control {
   border: none;
   font-size: 18px;
 }
+.btn-icon-table span {
+  font-size: 13px;
+}

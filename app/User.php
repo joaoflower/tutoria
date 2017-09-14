@@ -35,6 +35,13 @@ class User extends Authenticatable
     public function docente() { 
         return $this->belongsTo('tutoria\Docente', 'codigo', 'cod_prf'); 
     } 
+    public function comunicados() { 
+        return $this->hasMany('tutoria\Comunicado', 'usutut_id'); 
+    }
+    public function atencionrefs() { 
+        return $this->hasMany('tutoria\Atencionref', 'usutut_id'); 
+    }
+
     public static function getHeads() {
         return DB::table('usutut')
             ->leftjoin('unapnet.carrera', 'usutut.cod_car', '=', 'carrera.cod_car')

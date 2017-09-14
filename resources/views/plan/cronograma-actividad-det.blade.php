@@ -8,5 +8,5 @@
                                                 <td>{{$planactividad->mes5}}</td>
                                                 <td>{{$planactividad->responsable}}</td>
                                                 <td>
-                                                    {!! Form::button('<i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>', ['type' => 'button', 'class' => 'icon-edit btn-cronograma edit-actividad',  'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Modificar actividad', 'data-actividad-id' => $planactividad->id ]) !!}
+                                                    {!! Form::button('<i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i> <span>Modificar</span>', ['type' => 'button', 'class' => 'icon-edit btn-icon-table edit-actividad',  'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Modificar actividad', 'data-actividad-id' => $planactividad->id ]) !!}
                                                 </td>

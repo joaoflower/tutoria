@@ -133,6 +133,7 @@
 		'uses'	=> 'SesgruController@destroy',
 		'as'	=> 'sesgru.destroy'
 		]);
+	Route::get('sesgru/{id}/drop', 'SesgruController@dropSesgru');
 
 	Route::resource('itaestu', 'ItaestuController');
 	Route::get('itaestu/{id}/destroy', [
@@ -167,8 +168,13 @@
 	Route::post('usututc/dropcoordinador', 'UsututController@dropCoordinador')->name('usututc.dropcoordinador');
 	Route::post('usututc/getcoordinador', 'UsututController@getCoordinador')->name('usututc.getcoordinador');
 	Route::post('usututc/updatecoordinador', 'UsututController@updateCoordinador')->name('usututc.updatecoordinador');
+	#----------- Comunicados ------------------------------------------
+	Route::resource('comunicado', 'ComunicadoController');
+	Route::post('comunica/storecomunicado', 'ComunicadoController@storeComunicado')->name('comunica.storecomunicado');
+	Route::post('comunica/getcomunicado', 'ComunicadoController@getComunicado')->name('comunica.getcomunicado');
+	Route::post('comunica/updatecomunicado', 'ComunicadoController@updateComunicado')->name('comunica.updatecomunicado');
+	Route::post('comunica/dropcomunicado', 'ComunicadoController@dropComunicado')->name('comunica.dropcomunicado');
 	#-----------------------------------------------------
-
 	Route::resource('encusati', 'EncusatiController');
 	Route::get('encusati/{id}/destroy', [
 		'uses'	=> 'EncusatiController@destroy',
@@ -191,31 +197,34 @@
 	Route::get('infoestu/{num_mat}/addtutor', 'InfoestuController@addTutor');
 	#-------------------Plan----------------------
 	Route::resource('plan', 'PlanController');
-	Route::post('plan2', [
-		'uses'	=>	'PlanController@store2',
-		'as'	=>	'plan.store2'
-		]);
-	Route::post('plan3', [
-		'uses'	=>	'PlanController@store3',
-		'as'	=>	'plan.store3'
-		]);
-	Route::post('plan4', [
-		'uses'	=>	'PlanController@store4',
-		'as'	=>	'plan.store4'
-		]);
+	Route::post('planf/store1', 'PlanController@storeFactor1')->name('planf.store1');
+	Route::post('planf/store2', 'PlanController@storeFactor2')->name('planf.store2');
+	Route::post('planf/store3', 'PlanController@storeFactor3')->name('planf.store3');
+	Route::post('planf/store4', 'PlanController@storeFactor4')->name('planf.store4');
 
 	Route::post('plane/updateevaluacion', 'PlanController@updateEvaluacion')->name('planc.updateevaluacion');
 
 	Route::get('planc/cronograma', 'PlanController@createCronograma')->name('plan.cronograma');
-	Route::get('planc/{objetivo}/addobjetivo', 'PlanController@addObjetivo');	
 
-	Route::post('planc/storeobjetivo', 'PlanController@storeObjetivo')->name('planc.storeobjetivo');
 	Route::post('planc/updateobjetivo', 'PlanController@updateObjetivo')->name('planc.updateobjetivo');
 	Route::post('planc/storeactividad', 'PlanController@storeActividad')->name('planc.storeactividad');
 	Route::post('planc/getactividad', 'PlanController@getActividad')->name('planc.getactividad');
 	Route::post('planc/updateactividad', 'PlanController@updateActividad')->name('planc.updateactividad');
 	#---------------------------------------------------
 	Route::resource('seguimiento', 'SeguimientoController');
+	Route::post('seguir/storeseguimiento', 'SeguimientoController@storeSeguimiento')->name('seguir.storeseguimiento');
+	Route::post('seguir/getseguimiento', 'SeguimientoController@getSeguimiento')->name('seguir.getseguimiento');
+	Route::post('seguir/updateseguimiento', 'SeguimientoController@updateSeguimiento')->name('seguir.updateseguimiento');
+	Route::post('seguir/dropseguimiento', 'SeguimientoController@dropSeguimiento')->name('seguir.dropseguimiento');
+	#---------------------------------------------------
+	Route::resource('referido', 'ReferidoController');
+	Route::post('atencion/storeatencion', 'ReferidoController@storeAtencion')->name('atencion.storeatencion');
+
+	Route::resource('atencionref', 'AtencionrefController');
+	Route::post('atencion/getatencion', 'AtencionrefController@getAtencion')->name('atencion.getatencion');
+	Route::post('atencion/updateatencion', 'AtencionrefController@updateAtencion')->name('atencion.updateatencion');
+	Route::post('atencion/dropatencion', 'AtencionrefController@dropAtencion')->name('atencion.dropatencion');
+	#---------------------------------------------------
 
 	Route::resource('perfile', 'TutoradoController');
 	Route::post('perfile2', [
@@ -225,6 +234,10 @@
 	# POST 	/photos 	store 	photos.store
 
 	Route::resource('perfild', 'TutorController');
+	#---------------------------------------------------
+	Route::resource('estadistica', 'EstadisticaController');
+	Route::get('estadistica/{cod_car}/grupos', 'EstadisticaController@showGrupos')->name('estadistica.grupos');
+	Route::get('estadistica/{grupo_id}/tutorados', 'EstadisticaController@showTutorados')->name('estadistica.tutorados');
 
 	/*Route::get('grupo/{id}/{num_mat}/tutorado', 'GrupoController@addEstugrupo');
 	Route::get('grupo/{grupo_id}/{id}/deltutorado', 'GrupoController@delEstugrupo');*/

@@ -1,0 +1,1 @@
+                                                    {!! Form::button('<i class="fa fa-check-square-o fa-lg" aria-hidden="true"></i> <span>Seguimiento</span>', ['type' => 'button', 'class' => 'icon-new btn-icon-table new-seguimiento', 'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Realizar seguimiento', 'data-atencionref-id' => $atencionref_id]) !!}

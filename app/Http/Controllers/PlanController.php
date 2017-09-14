@@ -13,6 +13,7 @@ use tutoria\Planfactor;
 use tutoria\Itemfactor;
 use tutoria\Planobjetivo;
 use tutoria\Planactividad;
+use tutoria\Tutor;
 use Laracasts\Flash\Flash;
 
 
@@ -21,6 +22,7 @@ class PlanController extends Controller
 	private $ano_aca = '2017';
 	private $per_aca = '02';
     private $plan;
+    private $tutor;
 
     public function __construct()
     {
@@ -29,17 +31,25 @@ class PlanController extends Controller
             ->where('cod_car', Auth::user()->cod_car)->where('ano_aca', $this->ano_aca)
             ->where('per_aca', $this->per_aca)
             ->first();
+        $this->tutor = Tutor::find(Auth::user()->codigo);
     }
     public function index(Request $request) {
-        if($this->plan != null) {
-            $plan = Plan::find($this->plan->id);
-            $planfactores = Planfactor::where('plan_id', $this->plan->id)->with(['itemfactor', 'itemindicadores'])->get();
-            $planobjetivos = Planobjetivo::where('plan_id', $this->plan->id)->with('actividades')->get();
-            return view('plan.index')->with('plan', $plan)->with('planfactores', $planfactores)->with('planobjetivos', $planobjetivos);
-        } else {     
-            return redirect()->route('plan.create');            
-        }        
+        if($this->tutor != null) {
+            if($this->plan != null) {
+                $plan = Plan::find($this->plan->id);
+                $planfactores = Planfactor::where('plan_id', $this->plan->id)->with(['itemfactor', 'itemindicadores', 'actividades'])->get();
+                //dd($planfactores);
+                //$planobjetivos = Planobjetivo::where('plan_id', $this->plan->id)->with('actividades')->get();
+                //$planfactores = Planfactor::select('id', 'objetivo')->where('plan_id', $this->plan->id)->with('actividades')->get();
+                return view('plan.index')->with('plan', $plan)->with('planfactores', $planfactores); //->with('planobjetivos', $planobjetivos);
+            } else {     
+                return redirect()->route('plan.create');            
+            }     
+        } else {
+            return redirect()->route('perfild.create');
+        }   
 	}
+    # Obteniendo Plan-Factor-Indicador de la tabla planfactor_indicador
     public function getPfiplan($itemindicadores) {
         $pfi = array();
         foreach ($itemindicadores as $item) {
@@ -48,10 +58,11 @@ class PlanController extends Controller
             $pfi[$item->pivot->indicador_id]['problema'] = $item->pivot->problema;
             $pfi[$item->pivot->indicador_id]['causa'] = $item->pivot->causa;
             $pfi[$item->pivot->indicador_id]['alternativa'] = $item->pivot->alternativa;
-            $pfi[$item->pivot->indicador_id]['objetivo'] = $item->pivot->objetivo;
+            #$pfi[$item->pivot->indicador_id]['objetivo'] = $item->pivot->objetivo;  # borrar
         }
         return $pfi;
     }
+    # Obteniendo Plan-Factor-Indicador de la tabla itemindicador con nulls
     public function getPfiitem($itemindicadores) {
         $pfi = array();
         foreach($itemindicadores as $itemindicador) {
@@ -60,10 +71,11 @@ class PlanController extends Controller
             $pfi[$itemindicador->id]['problema'] = null;
             $pfi[$itemindicador->id]['causa'] = null;
             $pfi[$itemindicador->id]['alternativa'] = null;
-            $pfi[$itemindicador->id]['objetivo'] = null;
+            #$pfi[$itemindicador->id]['objetivo'] = null;
         }
         return $pfi;
     }
+    # crea el plan vacio
     public function createPlan() {
         if($this->plan == null) {            
             # creando un nuevo modelo
@@ -78,24 +90,28 @@ class PlanController extends Controller
                 ->first();
         }
     }
-    public function create() {
-        $this->createPlan();
-
-        $fortaleza = null;        
-        $itemfactor = Itemfactor::find(1);
+    public function getFactor( $factor_id ) {
+        # Obteniendo itemfactor
+        $itemfactor = Itemfactor::find( $factor_id );
         $itemfactor->itemindicadores;
-        
-        $planfactor = Planfactor::where('plan_id', $this->plan->id)->where('factor_id', 1)->first();
+        #Obteniendo planfactor y pfi
+        $planfactor = Planfactor::where('plan_id', $this->plan->id)->where('factor_id', $factor_id)->first();
         if($planfactor != null) {
-            $fortaleza = $planfactor->fortaleza;           
+            //$fortaleza = $planfactor->fortaleza;           
             $pfi = $this->getPfiplan($planfactor->itemindicadores);
         } else {
+            $planfactor = new Planfactor();
             $pfi = $this->getPfiitem($itemfactor->itemindicadores);
         }
-
-        return view('plan.create')->with('itemfactor', $itemfactor)->with('route', 'plan.store')
-            ->with('fortaleza', $fortaleza)->with('pfi', $pfi);
+        # return plan.create
+        return view('plan.create')->with('itemfactor', $itemfactor)->with('route', 'planf.store'.$factor_id )
+            ->with('pfi', $pfi)->with('planfactor', $planfactor);
     }
+    public function create() {
+        $this->createPlan();
+        return $this->getFactor( 1 );
+    }
+    # Grabando planfactor y planfactor_indicador
     public function storing(Request $request, $factor_id) {     
         $plan = Plan::find($this->plan->id);
         # get Planfactor
@@ -111,71 +127,38 @@ class PlanController extends Controller
             $planfactor->plan()->associate($plan);
             $planfactor->save();
         }
-
-        # get planfactor_indicador 
+        # generando planfactor_indicador 
         $planfactor_indicador = array();
         foreach ($request->problema as $id => $valor) {
-            $planfactor_indicador[$id] = ['data' => $request->data[$id], 'meta' => $request->meta[$id], 'problema' => $request->problema[$id], 'causa' => $request->causa[$id], 'alternativa' => $request->alternativa[$id], 'objetivo' => $request->objetivo[$id]];
+            $planfactor_indicador[$id] = ['data' => $request->data[$id], 'meta' => $request->meta[$id], 'problema' => $request->problema[$id], 'causa' => $request->causa[$id], 'alternativa' => $request->alternativa[$id]]; #, 'objetivo' => $request->objetivos[$id]];    # Borrar objetivo
         }
         # grabando la relación muchos a muchos
         $planfactor->itemindicadores()->sync($planfactor_indicador);
     }
-    public function store(Request $request) {     
+    public function storeFactor1(Request $request) {     
         $this->storing($request, 1);
-
-        $fortaleza = null;        
-        $itemfactor = Itemfactor::find(2);
-        $itemfactor->itemindicadores;
-        
-        $planfactor = Planfactor::where('plan_id', $this->plan->id)->where('factor_id', 2)->first();
-        if($planfactor != null) {
-            $fortaleza = $planfactor->fortaleza;           
-            $pfi = $this->getPfiplan($planfactor->itemindicadores);
-        } else {
-            $pfi = $this->getPfiitem($itemfactor->itemindicadores);
-        }
-
-        //Flash::success('Se ha guardado de forma satisfactoria !');
-        return view('plan.create')->with('itemfactor', $itemfactor)->with('route', 'plan.store2')
-            ->with('fortaleza', $fortaleza)->with('pfi', $pfi);
+        return $this->getFactor( 2 );
     }
-    public function store2(Request $request) {     
-        $this->storing($request, 2);
-
-        $fortaleza = null;        
-        $itemfactor = Itemfactor::find(3);
-        $itemfactor->itemindicadores;
-        
-        $planfactor = Planfactor::where('plan_id', $this->plan->id)->where('factor_id', 3)->first();
-        if($planfactor != null) {
-            $fortaleza = $planfactor->fortaleza;           
-            $pfi = $this->getPfiplan($planfactor->itemindicadores);
-        } else {
-            $pfi = $this->getPfiitem($itemfactor->itemindicadores);
-        }
-
-        //Flash::success('Se ha guardado de forma satisfactoria !');
-        return view('plan.create')->with('itemfactor', $itemfactor)->with('route', 'plan.store3')
-            ->with('fortaleza', $fortaleza)->with('pfi', $pfi);
+    public function storeFactor2(Request $request) {     
+        $this->storing($request, 2);        
+        return $this->getFactor( 3 );
+    }
+    public function storeFactor3(Request $request) {     
+        $this->storing($request, 3);
+        return $this->getFactor( 4 );
+    }
+    public function storeFactor4(Request $request) {     
+        $this->storing($request, 4);
+        /*$planfactores = Planfactor::select('id', 'objetivo')->where('plan_id', $this->plan->id)->with('actividades')->get();
+        //dd($planfactor);
+        return view('plan.cronograma')->with('planfactores', $planfactores);*/
+        return redirect()->route('plan.cronograma');
+    }
+    public function store(Request $request) {     
+    }
+    /*public function store2(Request $request) {     
     }
     public function store3(Request $request) {     
-        $this->storing($request, 3);
-
-        $fortaleza = null;        
-        $itemfactor = Itemfactor::find(4);
-        $itemfactor->itemindicadores;
-        
-        $planfactor = Planfactor::where('plan_id', $this->plan->id)->where('factor_id', 4)->first();
-        if($planfactor != null) {
-            $fortaleza = $planfactor->fortaleza;           
-            $pfi = $this->getPfiplan($planfactor->itemindicadores);
-        } else {
-            $pfi = $this->getPfiitem($itemfactor->itemindicadores);
-        }
-
-        //Flash::success('Se ha guardado de forma satisfactoria !');
-        return view('plan.create')->with('itemfactor', $itemfactor)->with('route', 'plan.store4')
-            ->with('fortaleza', $fortaleza)->with('pfi', $pfi);
     }
     public function store4(Request $request) {     
         $this->storing($request, 4);
@@ -183,7 +166,7 @@ class PlanController extends Controller
         //Flash::success('Se ha guardado de forma satisfactoria !');
         $planobjetivos = Planobjetivo::where('plan_id', $this->plan->id)->with('actividades')->get();
         return view('plan.cronograma')->with('planobjetivos', $planobjetivos);
-    }
+    }*/
     public function show($id) {
         
     }
@@ -203,40 +186,21 @@ class PlanController extends Controller
     }
 
     public function createCronograma() {
-        $planobjetivos = Planobjetivo::where('plan_id', $this->plan->id)->with('actividades')->get();
-    	return view('plan.cronograma')->with('planobjetivos', $planobjetivos);
+        $planfactores = Planfactor::select('id', 'objetivo')->where('plan_id', $this->plan->id)->with('actividades')->get();
+        return view('plan.cronograma')->with('planfactores', $planfactores);
     }
-    public function addObjetivo(Request $request) {
-        if($request->ajax()) {
-            $planobjetivo = new Planobjetivo();
-            $planobjetivo->plan_id = $this->plan->id;
-            $planobjetivo->objetivo = $objetivo;
-            $planobjetivo->save();
 
-            $planobjetivos = Planobjetivo::where('plan_id', $this->plan->id)->with('actividades')->get();
-            return view('plan.cronograma-det')->with('planobjetivos', $planobjetivos);
-        }
-    }
-    public function storeObjetivo(Request $request) {
-        if($request->ajax()) {
-            $planobjetivo = new Planobjetivo();
-            $planobjetivo->plan_id = $this->plan->id;
-            $planobjetivo->objetivo = $request->get('objetivo');
-            $planobjetivo->save();
-
-            return view('plan.cronograma-objetivo')->with('planobjetivo', $planobjetivo);
-        }
-    }
     public function updateObjetivo(Request $request) {
         if($request->ajax()) {
-            $planobjetivo = Planobjetivo::find( $request->get('objetivo_id') );
-            $planobjetivo->objetivo = $request->get('objetivo');
-            $planobjetivo->save();
+            $planfactor = Planfactor::find( $request->get('objetivo_id') );
+            $planfactor->objetivo = $request->get('objetivo');
+            $planfactor->save();
         }
     }
     public function storeActividad(Request $request) {
         if($request->ajax()) {
             $planactividad = new Planactividad($request->all());
+            $planactividad->planfactor_id = $request->get('objetivo_id');
             $planactividad->save();
 
             return view('plan.cronograma-actividad')->with('planactividad', $planactividad);

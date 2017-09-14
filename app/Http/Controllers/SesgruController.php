@@ -25,7 +25,8 @@ use Laracasts\Flash\Flash;
 class SesgruController extends Controller
 {
 	private $ano_aca = '2017';
-	private $per_aca = '01';
+	private $per_aca = '02';
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -153,12 +154,33 @@ class SesgruController extends Controller
     	$sesgru = Sesgru::find($id);
 
      	foreach ($sesgru->sesgruases as $sesgruase ) {
-         $sesgruase->delete();
+            $sesgruase->delete();
      	}
 
      	$sesgru->delete();
 
      Flash::error('Se ha borrado la sesion de forma exitosa');
      return redirect()->route('sesgru.index');
+    }
+    public function dropSesgru(Request $request, $id) {
+        if($request->ajax()) {
+            $sesgru = Sesgru::find($id);
+
+            foreach ($sesgru->sesgruases as $sesgruase ) {
+                $sesgruase->delete();
+            }
+            $sesgru->delete();
+
+            # ------
+            $sesgrus = null;
+            $grupo = Grupo::where('cod_prf', Auth::user()->codigo)->where('ano_aca', $this->ano_aca)->where('per_aca', $this->per_aca)->first();
+            if($grupo != null) { 
+                if($grupo->estugrupos->count() > 0) {
+                    $sesgrus = $grupo->sesgrus;
+                }
+            }
+            #----------------
+            return view('sesgru.index-sesgru')->with('sesgrus', $sesgrus);
+        }
     }
 }

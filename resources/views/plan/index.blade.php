@@ -67,7 +67,6 @@
                                                 <th>PROBLEMAS</th>
                                                 <th>CAUSAS</th>
                                                 <th>ALTERNATIVAS DE SOLUCIÓN</th>
-                                                <th>OBJETIVOS</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -83,9 +82,11 @@
                                                 <td>{{$itemindicador->pivot->problema}}</td>
                                                 <td>{{$itemindicador->pivot->causa}}</td>
                                                 <td>{{$itemindicador->pivot->alternativa}}</td>
-                                                <td>{{$itemindicador->pivot->objetivo}}</td>
                                             </tr>                                            
                                             @endforeach 
+                                            <tr>
+                                                <td colspan="7">OBJETIVOS: {{$planfactor->objetivo}}</td>
+                                            </tr>
                                             <tr>
                                                 <td colspan="7">FORTALEZAS: {{$planfactor->fortaleza}}</td>
                                             </tr>
@@ -145,7 +146,7 @@
                                                 <th>RESPONSABLES</th>
                                             </tr>
                                         </thead>
-                                        @foreach ($planobjetivos as $planobjetivo)
+                                        @foreach ($planfactores as $planobjetivo)
                                         <tbody>
                                             <tr>
                                                 <th colspan="9">OBJETIVO: {{$planobjetivo->objetivo}}</th>

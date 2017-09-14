@@ -15,7 +15,11 @@
                             <span class="img-wrapper pull-left m-r-15"><img src="images/avatar.png" alt="" style="width:64px" class="br-radius"></span>
                             <div class="media-body">
                                 <h3 class="text-white mb-2 m-t-10 ellipsis">{{ ucwords(strtolower($tutor->nombres)) }}</h3>
+                            @if(Auth::user()->type == 'head')
+                                <h5 class="text-white">Coordinador de tutoría</h5>
+                            @else
                                 <h5 class="text-white">Docente tutor</h5>
+                            @endif    
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -61,7 +65,8 @@
                                     <h1>{{$tutor->nombres.' '.$tutor->paterno.' '.$tutor->materno}}</h1>
                                     <span class="designation">{{$carrera->car_des}}</span>
                                     <p>                                        
-                                        <strong>Los aspecto que puedo ayudar en la vida universitaria de un estudiante son: </strong> {{strip_tags($tutor->ayu_tutoria)}}
+                                        <strong>Mis fortalezas para el desarrollo de la tutoría son: </strong> <br>
+                                        {!! $tutor->ayu_tutoria !!}
                                     </p>
                                     <table class="table table-condensed">
                                         <thead>

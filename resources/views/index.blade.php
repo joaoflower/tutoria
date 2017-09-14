@@ -22,6 +22,14 @@
                     <div id="portlet-2" class="panel-collapse collapse in">
                         <div class="portlet-body">
 
+                        @foreach ($comunicados as $comunicado)    
+                            <div class="alert alert-info alert-dismissible" role="alert" style="font-size: 16px;">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <strong>{{$comunicado->asunto}}: </strong><br>
+                                {!! $comunicado->mensaje !!}
+                            </div>
+                        @endforeach 
+
                         @if(Auth::user()->type == 'teacher')
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12" id="sesindi17s">
@@ -36,18 +44,13 @@
                                     <p><i class="fa fa-file-pdf-o" aria-hidden="true" style="color: red;"></i> {{ link_to_asset('pdfs/MODELO_Ses_1.pdf', 'MODELO SESIÓN 1 DE TUTORÍA GRUPAL') }}</p>
                                     <p><i class="fa fa-file-pdf-o" aria-hidden="true" style="color: red;"></i> {{ link_to_asset('pdfs/MODELO_Ses_2.pdf', 'MODELO SESIÓN 2 DE TUTORÍA GRUPAL') }}</p>
                                     <p><i class="fa fa-file-pdf-o" aria-hidden="true" style="color: red;"></i> {{ link_to_asset('pdfs/PLAN_TUTORIA.pdf', 'PLAN DE TUTORÍA Y ACOMPAÑAMIENTO UNIVERSITARIO') }}</p>
-                                    <p><i class="fa fa-file-pdf-o" aria-hidden="true" style="color: red;"></i> {{ link_to_asset('pdfs/TUTORIA_INDIVIDUAL.pdf', 'SESIÓN DE TUTORÍA INDIVIDUAL') }}</p>
-                                    <p><i class="fa fa-file-pdf-o" aria-hidden="true" style="color: red;"></i> {{ link_to_asset('pdfs/ENCUESTA_SATISFACCION.pdf', 'ENCUESTA DE SATISFACCIÓN DEL ESTUDIANTE CON EL SISTEMA DE TUTORÍA') }}</p>
+                                    <p><i class="fa fa-file-pdf-o" aria-hidden="true" style="color: red;"></i> {{ link_to_asset('pdfs/TUTORIA_INDIVIDUAL.pdf', 'SESIÓN DE TUTORÍA INDIVIDUAL') }}</p>                                    
                                 </div>
                             </div>
                         @endif
 
                         @if(Auth::user()->type == 'student')
-                            <div class="alert alert-warning alert-dismissible" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <strong>Constancia de Tutoría: </strong> La Constancia está disponible en la opción <strong>Reportes de Tutoría</strong>. <br>
-                                Genere la Constancia y hágalo firmar por el docente tutor.
-                            </div>
+
                         @endif
 
                         </div>

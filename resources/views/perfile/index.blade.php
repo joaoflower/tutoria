@@ -22,7 +22,7 @@
                             <div class="pull-right">
                                 
                                 <div class="dropdown">
-                                    <a data-toggle="dropdown" class="dropdown-toggle btn btn-primary" href="#"> Tutorando <span class="caret"></span></a>
+                                    <a data-toggle="dropdown" class="dropdown-toggle btn btn-primary" href="#"> Tutorado <span class="caret"></span></a>
                                     <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                     @if(Auth::user()->type == 'teacher')
                                         <li><a href="#">Enviar mensaje privado</a></li>
@@ -63,7 +63,8 @@
                                     <h1>{{$tutorado->nombres.' '.$tutorado->paterno.' '.$tutorado->materno}}</h1>
                                     <span class="designation">{{$carrera->car_des}}</span>
                                     <p>                                        
-                                        <strong>La tutoría me puede ayudar en los siguientes aspectos: </strong> {{strip_tags($tutorado->ayu_tutoria)}}
+                                        <strong>La tutoría me puede ayudar en los siguientes aspectos: </strong> <br>
+                                        {!! $tutorado->ayu_tutoria !!}
                                     </p>
                                     <table class="table table-condensed">
                                         <thead>

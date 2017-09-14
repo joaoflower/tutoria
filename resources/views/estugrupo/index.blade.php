@@ -20,7 +20,7 @@
                             </a>
                             <div class="pull-right btn-group-sm">
                                 <a href="{{ route('estugrupo.show', $estugrupo->num_mat) }}" class="btn btn-purple tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Ver">
-                                    <i class="fa fa-briefcase"></i> Perfil
+                                    <i class="fa fa-briefcase"></i> Ver Perfil
                                 </a>
                             </div>
                             <div class="info">

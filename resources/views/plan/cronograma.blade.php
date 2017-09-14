@@ -157,7 +157,7 @@
                                                 <th></th>
                                             </tr>
                                         </thead>
-                                        @foreach ($planobjetivos as $planobjetivo)
+                                        @foreach ($planfactores as $planobjetivo)
                                             @php
                                                 $buttonid = "button-".$planobjetivo->id;
                                             @endphp
@@ -165,9 +165,9 @@
                                             <tr>
                                                 <th colspan="7" id="objetivo-{{$planobjetivo->id}}">OBJETIVO: {{$planobjetivo->objetivo}}</th>
                                                 <th colspan="3">
-                                                    {!! Form::button('<i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>', ['type' => 'button', 'class' => 'icon-edit btn-cronograma edit-objetivo',  'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Modificar objetivo', 'data-objetivo-id' => $planobjetivo->id, 'data-objetivo' => $planobjetivo->objetivo, 'id' => $buttonid ]) !!}
+                                                    {!! Form::button('<i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i> <span>Modificar Objetivo</span>', ['type' => 'button', 'class' => 'icon-edit btn-icon-table edit-objetivo',  'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Modificar objetivo', 'data-objetivo-id' => $planobjetivo->id, 'data-objetivo' => $planobjetivo->objetivo, 'id' => $buttonid ]) !!}
 
-                                                    {!! Form::button('<i class="fa fa-tasks fa-lg" aria-hidden="true"></i>', ['type' => 'button', 'class' => 'icon-new btn-cronograma new-actividad',  'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Nueva actividad', 'data-objetivo-id' => $planobjetivo->id, 'id' => $buttonid ]) !!}
+                                                    {!! Form::button('<i class="fa fa-tasks fa-lg" aria-hidden="true"></i> <span>Nueva Actividad</span>', ['type' => 'button', 'class' => 'icon-new btn-icon-table new-actividad',  'data-toggle' => 'tooltip', 'data-placement' => 'top', 'title' => 'Nueva actividad', 'data-objetivo-id' => $planobjetivo->id, 'id' => $buttonid ]) !!}
                                                 </th>
                                             </tr>    
                                             @foreach ($planobjetivo->actividades as $planactividad)
@@ -177,16 +177,12 @@
                                         @endforeach                                        
                                     </table>                                    
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <div class="form-group m-b-0">
-                                        <div class="col-sm-offset-5 col-sm-7">
-                                            {!! Form::button('<i class="fa fa-calendar-plus-o"></i> <span>Nuevo Objetivo</span>', ['type' => 'button', 'class' => 'btn btn-primary btn-rounded btn-custom btn-lg m-t-5', 'id' => 'new-objetivo']) !!}  
-                                        </div>
-                                    </div>
+                                <div class="col-sm-offset-5 col-sm-7">                                        
+                                    <a href="{{ route('plan.index') }}" class="btn btn-primary btn-rounded btn-custom btn-lg m-b-5">
+                                        <i class="fa fa-arrow-left"></i> <span>Regresar al Plan</span>
+                                    </a>
                                 </div>
-                            </div> 
+                            </div>
 
                         </div>
                     </div>

@@ -39,27 +39,24 @@
                                 </div>                             
                             </div>
                             <div class="form-group">                                
-                                <div class="col-sm-3">
+                                <div class="col-sm-4">
                                     {!! Form::textarea('problema['.$itemindicador->id.']', $pfi[$itemindicador->id]['problema'], ['class' => 'form-control', 'placeholder' => 'Problemas', 'required', 'rows' => '2']) !!}
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-4">
                                     {!! Form::textarea('causa['.$itemindicador->id.']', $pfi[$itemindicador->id]['causa'], ['class' => 'form-control', 'placeholder' => 'Causas', 'required', 'rows' => '2']) !!}
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-4">
                                     {!! Form::textarea('alternativa['.$itemindicador->id.']', $pfi[$itemindicador->id]['alternativa'], ['class' => 'form-control', 'placeholder' => 'Alternativas de solución', 'required', 'rows' => '2']) !!}
-                                </div>
-                                <div class="col-sm-3">
-                                    {!! Form::textarea('objetivo['.$itemindicador->id.']', $pfi[$itemindicador->id]['objetivo'], ['class' => 'form-control', 'placeholder' => 'Objetivos', 'required', 'rows' => '2']) !!}
                                 </div>
                             </div>
                             @endforeach                            
 
                             <div class="form-group">                                
-                                <div class="col-sm-1">
-                                    <p class="form-control-static">Fortalezas: </p>
-                                </div> 
-                                <div class="col-sm-8">
-                                    {!! Form::textarea('fortaleza', $fortaleza, ['class' => 'form-control', 'placeholder' => 'Fortalezas', 'required', 'rows' => '2']) !!}
+                                <div class="col-sm-6">
+                                    {!! Form::textarea('objetivo', $planfactor->objetivo, ['class' => 'form-control', 'placeholder' => 'Objetivo', 'required', 'rows' => '2']) !!}
+                                </div>
+                                <div class="col-sm-6">
+                                    {!! Form::textarea('fortaleza', $planfactor->fortaleza, ['class' => 'form-control', 'placeholder' => 'Fortaleza', 'required', 'rows' => '2']) !!}
                                 </div>
                             </div>
 

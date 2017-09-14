@@ -1,0 +1,68 @@
+.background, .background > div {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+.background > div {
+    background-repeat: no-repeat,no-repeat;
+    background-position: center center,center center;
+    background-size: cover,cover;
+}
+.backgroundImage {
+    background-image: url("/images/fondo.jpg");
+}
+.background-overlay {
+    background: rgba(0,0,0,.65);
+}
+
+.outer {
+    display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+.middle {
+    display: table-cell;
+    vertical-align: middle;
+}
+.inner {
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 350px;
+    min-width: 300px;
+    max-width: 350px;
+    padding: 40px;
+    margin-bottom: 30px;
+    background-color: #fff;
+    -webkit-box-shadow: 0 2px 3px rgba(0,0,0,.55);
+    -moz-box-shadow: 0 2px 3px rgba(0,0,0,.55);
+    box-shadow: 0 2px 3px rgba(0,0,0,.55);
+    border: 1px solid rgba(0,0,0,.4);
+    text-align: center;
+}
+.logo {
+	padding: 0 0 20px 0; 
+}
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    overflow: visible;
+    z-index: 99;
+    clear: both;
+    background-color: rgba(0,0,0,.6);
+}
+div.footerNode {
+    margin: 0;
+    float: right;
+}
+div.footerNode a, div.footerNode span {
+	color: #fff;
+    font-size: 12px;
+    line-height: 28px;
+    white-space: nowrap;
+    display: inline-block;
+    margin-left: 16px;
+    margin-right: 16px;
+}

@@ -4,6 +4,11 @@
 
 @section('content')
 
+        <div class="alert alert-info alert-dismissible" role="alert" style="font-size: 16px;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>La información que nos brindaras será de uso exclusivo del sistema de Tutoría.</strong>
+        </div>
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="portlet">
@@ -53,7 +58,7 @@
                             </div>
                             
                             <div class="form-group">
-                                {!! Form::label('ayu_tutoria', '¿En qué aspecto puedes ayudar en la vida universitaria de un estudiante? :', ['class' => 'col-md-2 control-label']) !!}
+                                {!! Form::label('ayu_tutoria', '¿Cuales son tus fortalezas para el desarrollo de la tutoría? :', ['class' => 'col-md-2 control-label']) !!}
                                 <div class="col-sm-9">
                                     {!! Form::textarea('ayu_tutoria', $tutor->ayu_tutoria, ['class' => 'form-control', 'placeholder' => 'Describe', 'style' => 'display: none;', 'id' => 'ayu_tutoria', 'required']) !!}
                                     <div id="div-ayu_tutoria" class="summernote"></div>
