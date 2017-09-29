@@ -1,5 +1,5 @@
 body {
-    background-color: #e0e0e0;
+    background-color: #E0E0E0;
 }
 div {
     display: block;
@@ -7,7 +7,7 @@ div {
 
 /*---------nav heading--------------*/
 .logo {
-    padding: 6px 10px;
+    padding: 10px 10px;
 }
 .navbar-toggle {
  	margin: 6px 20px 6px 20px;
@@ -15,7 +15,7 @@ div {
 .top-menu li > a {
 	padding: 8px 15px 7px;
 }
-/*-----------------------*/
+/*---------Portlet--------------*/
 .portlet .portlet-body {
     border-top: 1px solid;
     border-color: #ddd;
@@ -23,6 +23,30 @@ div {
 .portlet .portlet-heading {
     padding: 13px 30px;
 }
+/*-------- Logo --------------*/
+.logo-expanded i {
+    font-size: 40px;
+    color: #337ab7;
+}
+/*-------- Navigation --------------*/
+.navigation {
+  margin: 10px 0px 20px;
+}
+.navigation > ul > li > a {
+  color: #5F555F;
+}
+.navigation > ul > li:hover > a,
+.navigation > ul > li.active:hover > a,
+.navigation > ul > li.active > a{
+  color: #000;
+  background: #E0E0E0;
+}
+.navigation ul li a i {
+  font-size: 22px;
+  color: #337ab7;
+}
+
+
 /*-----------------------*/
 table.dataTable tbody td {
     padding: 6px 10px;

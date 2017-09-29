@@ -47,11 +47,13 @@
                                             <tr>
                                                 <td>{{ $itemproblema->name }}</td>
                                                 <td>
-                                                @if ($sesindi17_pro[$itemproblema->id])
-                                                    {!! Form::checkbox('sesindi17_pro['.$itemproblema->id.']', 1, true) !!}
-                                                @else
-                                                    {!! Form::checkbox('sesindi17_pro['.$itemproblema->id.']') !!}
-                                                @endif
+                                                    <label class="cr-styled">
+                                                    @if ($sesindi17_pro[$itemproblema->id])
+                                                        {!! Form::checkbox('sesindi17_pro['.$itemproblema->id.']', 1, true) !!} <i class="fa"></i>
+                                                    @else
+                                                        {!! Form::checkbox('sesindi17_pro['.$itemproblema->id.']') !!} <i class="fa"></i>
+                                                    @endif
+                                                    </label>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -77,11 +79,13 @@
                                             <tr>
                                                 <td>{{ $itemreferido->name }}</td>
                                                 <td>
-                                                @if ($sesindi17_ref[$itemreferido->id])
-                                                    {!! Form::checkbox('sesindi17_ref['.$itemreferido->id.']', 1, true) !!} 
-                                                @else
-                                                    {!! Form::checkbox('sesindi17_ref['.$itemreferido->id.']') !!}
-                                                @endif
+                                                    <label class="cr-styled">
+                                                    @if ($sesindi17_ref[$itemreferido->id])
+                                                        {!! Form::checkbox('sesindi17_ref['.$itemreferido->id.']', 1, true) !!} <i class="fa"></i>
+                                                    @else
+                                                        {!! Form::checkbox('sesindi17_ref['.$itemreferido->id.']') !!} <i class="fa"></i>
+                                                    @endif
+                                                    </label>                                                
                                                 </td>
                                             </tr>
                                         @endforeach

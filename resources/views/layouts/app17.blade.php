@@ -9,7 +9,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 	<link rel="icon" type="image/png" href="{{ asset('favicon.png') }}" />
 
-@yield('js0')
+@yield('css0')
 	<link rel="stylesheet" href="{{ asset('assets/jquery-ui/css/jquery-ui.min.css') }}">
 
 	<link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}">
@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="{{ asset('assets/sweet-alert/css/sweet-alert.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('assets/tutoria17/css/tutoria.css') }}">
+@yield('css')
 </head>
 <body>
 

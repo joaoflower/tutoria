@@ -109,13 +109,17 @@ class Sesindi17Controller extends Controller
     public function store(Sesindi17Request $request) {
         # Almacenar los problemas y referidos en arrays
         $sesindi17_pro = array();
-        foreach ($request->sesindi17_pro as $problema_id => $enable) {
-            $sesindi17_pro[$problema_id] = ['enable' => $enable];
+        if( isset($request->sesindi17_pro) ) {
+            foreach ($request->sesindi17_pro as $problema_id => $enable) {
+                $sesindi17_pro[$problema_id] = ['enable' => $enable];
+            }
         }
         $sesindi17_ref = array();
-        foreach ($request->sesindi17_ref as $referido_id => $enable) {
-            $sesindi17_ref[$referido_id] = ['enable' => $enable];
-        }
+        if( isset($request->sesindi17_ref) ) {
+            foreach ($request->sesindi17_ref as $referido_id => $enable) {
+                $sesindi17_ref[$referido_id] = ['enable' => $enable];
+            }
+        }       
         
         # Creando un nuevo y grabando la sesion individual
         $sesindi17 = new Sesindi17($request->all());        
@@ -165,12 +169,16 @@ class Sesindi17Controller extends Controller
     public function update(Request $request, $id) {
         # Almacenar los problemas y referidos en arrays
         $sesindi17_pro = array();
-        foreach ($request->sesindi17_pro as $problema_id => $enable) {
-            $sesindi17_pro[$problema_id] = ['enable' => $enable];
+        if( isset($request->sesindi17_pro) ) {
+            foreach ($request->sesindi17_pro as $problema_id => $enable) {
+                $sesindi17_pro[$problema_id] = ['enable' => $enable];
+            }
         }
         $sesindi17_ref = array();
-        foreach ($request->sesindi17_ref as $referido_id => $enable) {
-            $sesindi17_ref[$referido_id] = ['enable' => $enable];
+        if( isset($request->sesindi17_ref) ) {
+            foreach ($request->sesindi17_ref as $referido_id => $enable) {
+                $sesindi17_ref[$referido_id] = ['enable' => $enable];
+            }
         }
 
     	$sesindi17 = Sesindi17::find($id);

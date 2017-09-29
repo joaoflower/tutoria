@@ -134,6 +134,7 @@
 		'as'	=> 'sesgru.destroy'
 		]);
 	Route::get('sesgru/{id}/drop', 'SesgruController@dropSesgru');
+	Route::post('sesgrui/uploadimg', 'SesgruController@uploadImg')->name('sesgrui.uploadimg');
 
 	Route::resource('itaestu', 'ItaestuController');
 	Route::get('itaestu/{id}/destroy', [
@@ -237,6 +238,7 @@
 	#---------------------------------------------------
 	Route::resource('estadistica', 'EstadisticaController');
 	Route::get('estadistica/{cod_car}/grupos', 'EstadisticaController@showGrupos')->name('estadistica.grupos');
+	Route::get('estadistica/{cod_car}/plan', 'EstadisticaController@showPlan')->name('estadistica.plan');
 	Route::get('estadistica/{grupo_id}/tutorados', 'EstadisticaController@showTutorados')->name('estadistica.tutorados');
 
 	/*Route::get('grupo/{id}/{num_mat}/tutorado', 'GrupoController@addEstugrupo');

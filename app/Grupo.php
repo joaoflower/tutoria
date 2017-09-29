@@ -14,8 +14,8 @@ class Grupo extends Model
     public function estugrupos() { 
     	return $this->hasMany('tutoria\Estugrupo'); 
     }
-    public function sesgrus() { 
-    	return $this->hasMany('tutoria\Sesgru'); 
+    public function sesgru17s() { 
+    	return $this->hasMany('tutoria\Sesgru17', 'grupo_id'); 
     }
     public function inforats() { 
     	return $this->hasMany('tutoria\Inforat'); 

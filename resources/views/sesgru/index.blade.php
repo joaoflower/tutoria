@@ -1,6 +1,6 @@
 @extends('layouts.app17')
 
-@section('title','Seguimiento Individual')
+@section('title','Tutoría grupal por sessión')
 
 @section('content')
 

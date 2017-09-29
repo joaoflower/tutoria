@@ -18,6 +18,11 @@
                     </div>
                     <div id="portlet-2" class="panel-collapse collapse in">
                         <div class="portlet-body">
+                            <div class="alert alert-info alert-dismissible" role="alert" style="font-size: 16px;">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                Haga click sobre una <strong>Escuela profesional</strong> para ver información más detallada. <br>
+                                Haga click sobre <strong>Plan</strong> para ver información más detallada del Plan de Tutoría.
+                            </div>
 
                             <div class="table-responsive">
                                 <table class="table">
@@ -26,30 +31,49 @@
                                             <th>#</th>
                                             <th>Cód.</th>
                                             <th>Escuela Profesional</th>
+                                            <th>Plan</th>
                                             <th>Tutores</th>
                                             <th>Tutorados</th>
-                                            <th>Sesiones individuales</th>
-                                            <th>Tutorados Referidos</th>
-                                            <th>Sesiones grupales</th>
-                                            <th>Constancias de tutoría</th>
+                                            <th>Sesión grupal</th>
+                                            <th>Sesión individual</th>
+                                            <th>Referencia</th>
+                                            <th>Atendido</th>
+                                            <th>Seguimiento</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    @php $count = 0; @endphp
-                                    @foreach($grupos as $grupo) @php $count++; @endphp
+                                    @php $count = 0; $gru = 0; $estu = 0; $sesgru = 0; $sesindi = 0; $refe = 0; $aten = 0; $segui = 0; @endphp
+                                    @foreach($grupos as $grupo)  @php $count++; $gru+=$grupo->canti_gru; $estu+=$grupo->canti_estu; $sesgru+=$grupo->canti_sesgru17; $sesindi+=$grupo->canti_sesindi17; $refe+=$grupo->canti_referido; $aten+=$grupo->canti_atencion; $segui+=$grupo->canti_seguimiento;  @endphp
                                         <tr>
                                             <td>{{ $count }}</td>
                                             <td>{{ $grupo->cod_car }}</td>
                                             <td>{{ link_to_asset( route('estadistica.grupos', $grupo->cod_car), ucwords(strtolower($grupo->car_des))) }}</td>
+                                            <td>{{ link_to_asset( route('estadistica.plan', $grupo->cod_car), 'Plan') }}</td>
                                             <td>{{ $grupo->canti_gru }}</td>
                                             <td>{{ $grupo->canti_estu }}</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
-                                            <td>0</td>
+                                            <td>{{ $grupo->canti_sesgru17 }}</td>
+                                            <td>{{ $grupo->canti_sesindi17 }}</td>
+                                            <td>{{ $grupo->canti_referido }}</td>
+                                            <td>{{ $grupo->canti_atencion }}</td>
+                                            <td>{{ $grupo->canti_seguimiento }}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>TOTAL :</th>                                            
+                                            <th>{{ $gru }}</th>
+                                            <th>{{ $estu }}</th>
+                                            <th>{{ $sesgru }}</th>
+                                            <th>{{ $sesindi }}</th>
+                                            <th>{{ $refe }}</th>
+                                            <th>{{ $aten }}</th>
+                                            <th>{{ $segui }}</th>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
     

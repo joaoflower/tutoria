@@ -4,7 +4,7 @@ namespace tutoria\Http\Requests;
 
 use tutoria\Http\Requests\Request;
 
-class SesgruRequest extends Request
+class SesgruImgRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,7 @@ class SesgruRequest extends Request
     public function rules()
     {
         return [
-            'asi_ests'   => 'required',
-            'valoraciones'   => 'required',
-            'fecha'   => 'date|required',
+            'file' => 'image|max:4000',
         ];
     }
 }

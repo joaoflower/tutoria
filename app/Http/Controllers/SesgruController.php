@@ -9,165 +9,163 @@ use tutoria\Http\Requests;
 use Illuminate\Support\Collection;
 use Auth;
 use tutoria\Http\Requests\SesgruRequest;
-use tutoria\Docente;
+use tutoria\Http\Requests\SesgruImgRequest;
+
 use tutoria\Grupo;
-use tutoria\Estudiante;
-use tutoria\Estumat;
-use tutoria\Evalses;
-use tutoria\Sesindi;
-use tutoria\Sesgru;
-use tutoria\Sesgruase;
-use tutoria\Induccion;
-use tutoria\Iteminduc;
-use tutoria\Procinduc;
+use tutoria\Tutor;
+use tutoria\Estugrupo;
+use tutoria\Sesgru17;
+use tutoria\Sesgru17av;
+use tutoria\Sesgru17img;
+
 use Laracasts\Flash\Flash;
 
 class SesgruController extends Controller
 {
 	private $ano_aca = '2017';
 	private $per_aca = '02';
+    private $grupo;
+    private $tutor;
 
     public function __construct()
     {
         $this->middleware('auth');
+        $this->grupo = Grupo::select('id')
+            ->where('cod_prf', Auth::user()->codigo)->where('ano_aca', $this->ano_aca)->where('per_aca', $this->per_aca)
+            ->first();
+        $this->tutor = Tutor::find(Auth::user()->codigo);
     }
     public function index(Request $request) {
-        $grupo = Grupo::where('cod_prf', Auth::user()->codigo)->where('ano_aca', $this->ano_aca)->where('per_aca', $this->per_aca)->first();
-        if($grupo != null) { 
-            if($grupo->estugrupos->count() > 0) {
-                $sesgrus = $grupo->sesgrus;
-
-        	   return view('sesgru.index')->with('sesgrus', $sesgrus);
-            }
-        }
-        return view('nohayestu');
+        if($this->tutor != null) {
+            # Verificar si tiene grupo 
+            if($this->grupo != null) { 
+                return view('sesgru.index')->with('sesgrus', $this->grupo->sesgru17s);
+            } 
+            return view('nohayestu');
+        } 
+        return redirect()->route('perfild.create');
 	}
     public function create() {
-    	//$docente = Docente::where('cod_prf', Auth::user()->codigo)->first();
-     	//$docente->name = $docente->paterno.' '.$docente->materno.' '.$docente->nombres;
-        $docente = Docente::getName(Auth::user()->codigo);
+        # Obteniendo la lista de los tutorados
+        $estugrupos = Estugrupo::where( 'grupo_id', $this->grupo->id )
+            ->leftJoin('unapnet.carrera', 'estugrupo.cod_car', '=', 'carrera.cod_car')
+            ->leftJoin('unapnet.estudiante', 'estugrupo.num_mat', '=', 'estudiante.num_mat')
+            ->select('estugrupo.id', 'carrera.car_des', 'estugrupo.num_mat', 'estudiante.paterno', 'estudiante.materno', 'estudiante.nombres')
+            ->orderBy('estudiante.paterno', 'asc')
+            ->get();
+        # Generando el numero de sesión
+        $count = Sesgru17::where( 'grupo_id', $this->grupo->id )->count();        
+        $nro_ses = $count + 1;
 
-     	$grupo = Grupo::where('cod_prf', Auth::user()->codigo)->where('ano_aca', $this->ano_aca)->where('per_aca', $this->per_aca)->first();
-
-     	$estugrupos = $grupo->estugrupos;
-     	$estugrupos->each(function($estugrupo) {
-            //$estugrupo->estumat->estudiante;
-            //$estugrupo->name = $estugrupo->estumat->estudiante->paterno.' '.$estugrupo->estumat->estudiante->materno.' '.$estugrupo->estumat->estudiante->nombres;
-            $estugrupo->estu = Estudiante::getEstudiante($estugrupo->num_mat);
-            $estugrupo->name = $estugrupo->estu->paterno.' '.$estugrupo->estu->materno.', '.$estugrupo->estu->nombres;
-     	});
-     	foreach ($estugrupos as $eg) {
-            $estu_tmp[$eg->id] = $eg->name;
-     	}
-     	$estudiantes = Collection::make($estu_tmp);   
-
-     	$evalsess = Evalses::lists('name', 'id');
-
-     	return view('sesgru.create')
-            ->with('docente', $docente)
-            ->with('grupo', $grupo)
-            ->with('estudiantes', $estudiantes)
-            ->with('evalsess', $evalsess);
+        return view('sesgru.create')
+            ->with('estugrupos', $estugrupos)->with('nro_ses', $nro_ses);
     }
-    public function store(SesgruRequest $request) {
-    	$grupo = Grupo::where('cod_prf', Auth::user()->codigo)->where('ano_aca', $this->ano_aca)->where('per_aca', $this->per_aca)->first();
-    	$sesgru = new Sesgru($request->all());
-    	$sesgru->grupo_id = $grupo->id;
-    	
-    	$count = Sesgru::where('grupo_id', $sesgru->grupo_id)->count();
-        
-        $sesgru->nro_ses = $count + 1;
-        $sesgru->save();
+    public function uploadImg( SesgruImgRequest $request ) {
+        $folder = '/175c687854099c6656b688aff89f27dce39a0cb4/';
+        $path = public_path().$folder;
+        $file = $request->file('file');
+        $fileExt = $file->getClientOriginalExtension();
+        $fileName = sha1(time().time()).".{$fileExt}";
+        $fileSize = $file->getClientSize();
+        $fileMime = $file->getClientMimeType();
+        $file->move($path, $fileName);
+        # Crea sesgru si no existe
+        if( isset( $request->nro_ses ) ) {
+            $sesgru = Sesgru17::where( 'grupo_id', $this->grupo->id )->where( 'nro_ses', $request->get('nro_ses') )->first();
+            if( $sesgru == null ) {
+                $sesgru = new Sesgru17($request->all());
+                $sesgru->grupo_id = $this->grupo->id;
+                $sesgru->save();
+            }
+        } elseif ( isset( $request->sesgru_id ) ) {
+            $sesgru = Sesgru17::find( $request->get('sesgru_id') );
+        }
+        # new image
+        $sesgru17img = new Sesgru17img();
+        $sesgru17img->sesgru17()->associate($sesgru);
+        $sesgru17img->url = $folder.$fileName;
+        $sesgru17img->size = $fileSize;
+        $sesgru17img->mime = $fileMime;
+        $sesgru17img->save();
 
+    }
+    public function store( SesgruRequest $request ) {
+    	# Busca y actualiza la sesgru, y si no existe lo crea
+        
+            $sesgru = Sesgru17::where( 'grupo_id', $this->grupo->id )->where( 'nro_ses', $request->get('nro_ses') )->first();
+            if( $sesgru == null ) {
+               $sesgru = new Sesgru17($request->all());
+               $sesgru->grupo_id = $this->grupo->id;
+            } else {
+                $sesgru->fecha = $request->get('fecha');
+            }
+            $sesgru->save();
+        # ------------------------
         foreach ($request->asi_ests as $estugrupo_id => $asi_est) {
-          	$sesgruase = new Sesgruase();
-          	$sesgruase->sesgru()->associate($sesgru);
-          	$sesgruase->estugrupo_id = $estugrupo_id;
-          	$sesgruase->asi_est = $asi_est;
-          	$sesgruase->evalses_id = $request->evalses_ids[$estugrupo_id];
-          	$sesgruase->save();
+          	$sesgru17av = new Sesgru17av();
+          	$sesgru17av->sesgru17()->associate($sesgru);
+          	$sesgru17av->estugrupo_id = $estugrupo_id;
+          	$sesgru17av->asi_est = $asi_est;
+          	$sesgru17av->valoracion = $request->valoraciones[$estugrupo_id];
+          	$sesgru17av->save();
         }
         Flash::success('Se ha guardado la sesión de forma satisfactoria !');
 
         return redirect()->route('sesgru.index');
-    }
+    }    
     public function show($id) {
         
     }
-    public function edit($id) {
-        //$docente = Docente::where('cod_prf', Auth::user()->codigo)->first();
-        //$docente->name = $docente->paterno.' '.$docente->materno.' '.$docente->nombres;
-        $docente = Docente::getName(Auth::user()->codigo);
+    public function edit( $id ) {
+        $sesgru = Sesgru17::find( $id );
+        $sesgru17avs = Sesgru17av::where( 'sesgru17_id', $id )
+            ->leftJoin('estugrupo', 'sesgru17av.estugrupo_id', '=', 'estugrupo.id')
+            ->leftJoin('unapnet.carrera', 'estugrupo.cod_car', '=', 'carrera.cod_car')
+            ->leftJoin('unapnet.estudiante', 'estugrupo.num_mat', '=', 'estudiante.num_mat')
+            ->select('sesgru17av.id', 'sesgru17av.sesgru17_id', 'carrera.car_des', 'estugrupo.num_mat', 'estudiante.paterno', 'estudiante.materno', 'estudiante.nombres', 'sesgru17av.asi_est', 'sesgru17av.valoracion')
+            ->orderBy('estudiante.paterno', 'asc')
+            ->get();
 
-        $grupo = Grupo::where('cod_prf', Auth::user()->codigo)->where('ano_aca', $this->ano_aca)->where('per_aca', $this->per_aca)->first();
+        $sesgru17imgs = Sesgru17img::where( 'sesgru17_id', $id )->get();
+        $imgjson = array();
+        foreach( $sesgru17imgs as $sesgru17img ) {
+            $imgjson[] = [
+                'original' => 'Foto',
+                'size' => $sesgru17img->size,
+                'filename' => $sesgru17img->url
+            ];
+        }
 
-        $sesgru = Sesgru::find($id);
-
-    	$estugrupos = $sesgru->grupo->estugrupos;
-     	$estugrupos->each(function($estugrupo) {
-            //$estugrupo->estumat->estudiante;
-            //$estugrupo->name = $estugrupo->estumat->estudiante->paterno.' '.$estugrupo->estumat->estudiante->materno.' '.$estugrupo->estumat->estudiante->nombres;
-            $estugrupo->estu = Estudiante::getEstudiante($estugrupo->num_mat);
-            $estugrupo->name = $estugrupo->estu->paterno.' '.$estugrupo->estu->materno.', '.$estugrupo->estu->nombres;
-     	});
-     	foreach ($estugrupos as $eg) {
-         $estu_tmp[$eg->id] = $eg->name;
-     	}
-     	$estudiantes = Collection::make($estu_tmp); 
-
-     	$asi_ests = array();
-     	$evalses_ids = array();
-     	foreach ($sesgru->sesgruases as $sesgruase) {
-     		$asi_ests[$sesgruase->estugrupo_id] = $sesgruase->asi_est;
-     		$evalses_ids[$sesgruase->estugrupo_id] = $sesgruase->evalses_id;
-     	}
-
-     	$evalsess = Evalses::lists('name', 'id');
-
-     	return view('sesgru.edit')
-         ->with('docente', $docente)
-         ->with('grupo', $grupo)
-         ->with('sesgru', $sesgru)
-         ->with('estudiantes', $estudiantes)
-         ->with('asi_ests', $asi_ests)
-         ->with('evalses_ids', $evalses_ids)
-         ->with('evalsess', $evalsess);
-
+        return view('sesgru.edit')->with('sesgru', $sesgru)->with('sesgru17avs', $sesgru17avs)->with('imgjson', json_encode(['images' => $imgjson]) );
     }
     public function update(SesgruRequest $request, $id) {
+        $sesgru = Sesgru17::find($id);
+        $sesgru->fill($request->all());
+        $sesgru->save();
 
-    	$sesgru = Sesgru::find($id);
-    	$sesgru->fill($request->all());
-      $sesgru->save();
+        $sesgru->sesgru17avs;
 
-    	foreach ($sesgru->sesgruases as $sesgruase) {
-    		$sesgruase->asi_est = $request->asi_ests[$sesgruase->estugrupo_id];
-    		$sesgruase->evalses_id = $request->evalses_ids[$sesgruase->estugrupo_id];
-    		$sesgruase->save();
-    	}
+        foreach ($sesgru->sesgru17avs as $sesgru17av) {
+            $sesgru17av->asi_est = $request->asi_ests[ $sesgru17av->id ];
+            $sesgru17av->valoracion = $request->valoraciones[ $sesgru17av->id ];
+            $sesgru17av->save();
+        }
+        Flash::success('Se ha editado la sesión de forma satisfactoria !');
 
-    	Flash::success('Se ha editado la sesión de forma satisfactoria !');
-
-      return redirect()->route('sesgru.index');
+        return redirect()->route('sesgru.index');
     }
     public function destroy($id) {
-    	$sesgru = Sesgru::find($id);
 
-     	foreach ($sesgru->sesgruases as $sesgruase ) {
-            $sesgruase->delete();
-     	}
-
-     	$sesgru->delete();
-
-     Flash::error('Se ha borrado la sesion de forma exitosa');
-     return redirect()->route('sesgru.index');
     }
     public function dropSesgru(Request $request, $id) {
         if($request->ajax()) {
-            $sesgru = Sesgru::find($id);
+            $sesgru = Sesgru17::find($id);
 
-            foreach ($sesgru->sesgruases as $sesgruase ) {
-                $sesgruase->delete();
+            foreach ($sesgru->sesgru17avs as $sesgru17av ) {
+                $sesgru17av->delete();
+            }
+            foreach ($sesgru->sesgru17imgs as $sesgru17img ) {
+                $sesgru17img->delete();
             }
             $sesgru->delete();
 
@@ -176,11 +174,12 @@ class SesgruController extends Controller
             $grupo = Grupo::where('cod_prf', Auth::user()->codigo)->where('ano_aca', $this->ano_aca)->where('per_aca', $this->per_aca)->first();
             if($grupo != null) { 
                 if($grupo->estugrupos->count() > 0) {
-                    $sesgrus = $grupo->sesgrus;
+                    $sesgrus = $grupo->sesgru17s;
                 }
             }
             #----------------
             return view('sesgru.index-sesgru')->with('sesgrus', $sesgrus);
         }
     }
+
 }

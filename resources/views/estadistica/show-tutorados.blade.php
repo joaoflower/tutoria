@@ -34,8 +34,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    @php $count = 0; @endphp
-                                    @foreach($estugrupos as $estugrupo) @php $count++; @endphp
+                                    @php $count = 0; $sesindi = 0; $refe = 0; $aten = 0; $segui = 0; @endphp
+                                    @foreach($estugrupos as $estugrupo)  @php $count++; $sesindi+=$estugrupo->canti_sesindi17; $refe+=$estugrupo->canti_referido; $aten+=$estugrupo->canti_atencion; $segui+=$estugrupo->canti_seguimiento;  @endphp
                                         <tr>
                                             <td>{{ $count }}</td>
                                             <td>{{ ucwords(strtolower($estugrupo->car_des)) }}</td>
@@ -45,9 +45,21 @@
                                             <td>{{ $estugrupo->canti_referido }}</td>
                                             <td>{{ $estugrupo->canti_atencion }}</td>
                                             <td>{{ $estugrupo->canti_seguimiento }}</td>
-                                        </tr>
+                                        </tr>                                        
                                     @endforeach
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>TOTAL :</th>                                            
+                                            <th>{{ $sesindi }}</th>
+                                            <th>{{ $refe }}</th>
+                                            <th>{{ $aten }}</th>
+                                            <th>{{ $segui }}</th>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
     

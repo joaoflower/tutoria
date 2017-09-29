@@ -95,19 +95,20 @@
 
                                     </table>
                                 </div>
-                            </div>  
+                            </div> 
+                            @if(Auth::user()->type == 'head') 
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="form-group m-b-0">
                                         <div class="col-sm-offset-5 col-sm-7">
                                             <a href="{{ route('plan.edit', '112358') }}" class="btn btn-info btn-rounded btn-custom btn-lg m-b-5">
-                                                <i class="fa fa-pencil-square-o"></i> <span>Elaborar Diagnóstico</span>
+                                                <i class="fa fa-pencil-square-o"></i> <span>Elaborar/Modificar Diagnóstico</span>
                                             </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>                                  
-                            
+                            @endif
                         </div>
                     </div>
                 </div> 
@@ -169,19 +170,20 @@
 
                                     </table>
                                 </div>
-                            </div>  
+                            </div> 
+                            @if(Auth::user()->type == 'head') 
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="form-group m-b-0">
                                         <div class="col-sm-offset-5 col-sm-7">
                                             <a href="{{ route('plan.cronograma') }}" class="btn btn-info btn-rounded btn-custom btn-lg m-b-5">
-                                                <i class="fa fa-pencil-square-o"></i> <span>Elaborar Cronograma</span>
+                                                <i class="fa fa-pencil-square-o"></i> <span>Elaborar/Modificar Cronograma</span>
                                             </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>                                  
-                            
+                            @endif
                         </div>
                     </div>
                 </div> 
@@ -224,16 +226,17 @@
                                     </table>
                                 </div>
                             </div>  
+                            @if(Auth::user()->type == 'head')
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="form-group m-b-0">
                                         <div class="col-sm-offset-5 col-sm-7">
-                                            {!! Form::button('<i class="fa fa-pencil-square-o"></i> <span>Elaborar Evaluación</span>', ['type' => 'button', 'class' => 'btn btn-info btn-rounded btn-custom btn-lg m-b-5', 'id' => 'edit-evaluacion']) !!}
+                                            {!! Form::button('<i class="fa fa-pencil-square-o"></i> <span>Elaborar/Modificar Evaluación</span>', ['type' => 'button', 'class' => 'btn btn-info btn-rounded btn-custom btn-lg m-b-5', 'id' => 'edit-evaluacion']) !!}
                                         </div>
                                     </div>
                                 </div>
                             </div>                                  
-                            
+                            @endif
                         </div>
                     </div>
                 </div> 

@@ -18,6 +18,9 @@ class Estugrupo extends Model
     public function sesindi17s() { 
         return $this->hasMany('tutoria\Sesindi17'); 
     }
+    public function sesgru17avs() { 
+        return $this->hasMany('tutoria\Sesgru17av', 'estugrupo_id'); 
+    }
     public function induccion() { 
     	return $this->hasOne('tutoria\Induccion'); 
     }

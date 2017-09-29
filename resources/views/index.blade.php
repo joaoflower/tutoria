@@ -4,7 +4,7 @@
 
 @section('content')
         <div class="page-title"> 
-            <h3 class="title">Bienvenido al Sistema de Turoría</h3> 
+            <h3 class="title">Bienvenido al Sistema de TUTORÍA y ACOMPAÑAMIENTO UNIVERSITARIO</h3> 
         </div>
 
         <div class="row">

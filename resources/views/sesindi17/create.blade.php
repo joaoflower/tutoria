@@ -47,7 +47,9 @@
                                             <tr>
                                                 <td>{{ $itemproblema->name }}</td>
                                                 <td>
-                                                    {!! Form::checkbox('sesindi17_pro['.$itemproblema->id.']') !!}  
+                                                    <label class="cr-styled">
+                                                        {!! Form::checkbox('sesindi17_pro['.$itemproblema->id.']') !!} <i class="fa"></i>
+                                                    </label>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -73,7 +75,9 @@
                                             <tr>
                                                 <td>{{ $itemreferido->name }}</td>
                                                 <td>
-                                                    {!! Form::checkbox('sesindi17_ref['.$itemreferido->id.']') !!}  
+                                                    <label class="cr-styled">
+                                                        {!! Form::checkbox('sesindi17_ref['.$itemreferido->id.']') !!} <i class="fa"></i>
+                                                    </label>                                                     
                                                 </td>
                                             </tr>
                                         @endforeach
