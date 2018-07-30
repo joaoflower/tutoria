@@ -22,8 +22,8 @@ use Laracasts\Flash\Flash;
 
 class SesgruController extends Controller
 {
-	private $ano_aca = '2017';
-	private $per_aca = '02';
+	private $ano_aca = '2018';
+	private $per_aca = '01';
     private $grupo;
     private $tutor;
 

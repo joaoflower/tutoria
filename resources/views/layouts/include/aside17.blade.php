@@ -11,6 +11,7 @@
         @if(Auth::user()->type == 'admin')
             <li class="has-submenu"><a href="{{ route('usutut.index')  }}"><i class="ion-ios-people"></i> <span class="nav-label">Lista de Coordinadores</span><span class="badge bg-success">Nuevo</span></a></li>
             <li class="has-submenu"><a href="{{ route('estadistica.index') }}"><i class="ion-stats-bars"></i> <span class="nav-label">Estadísticas</span></a></li>
+            <li class="has-submenu"><a href="{{ route('estadistica17.index') }}"><i class="ion-stats-bars"></i> <span class="nav-label">Estadísticas 2017-II</span></a></li>
             <li class="has-submenu"><a href="{{ route('comunicado.index')  }}"><i class="ion-ios-bell-outline"></i> <span class="nav-label">Lista de Comunicados</span><span class="badge bg-success">Nuevo</span></a></li>            
         @endif
 
@@ -20,10 +21,12 @@
             <li class="has-submenu"><a href="{{ route('grupo.index') }}"><i class="ion-person-add"></i> <span class="nav-label">Asignación de Tutores a Tutorados</span><span class="badge bg-success">Nuevo</span></a></li>
             <li class="has-submenu"><a href="{{ route('grupot.tutortutorado') }}"><i class="ion-person-add"></i> <span class="nav-label">Lista de Tutores y Tutorados</span><span class="badge bg-success">Nuevo</span></a></li>
             <li class="has-submenu"><a href="{{ route('estadistica.grupos', Auth::user()->cod_car) }}"><i class="ion-stats-bars"></i> <span class="nav-label">Estadísticas</span><span class="badge bg-success">Nuevo</span></a></li>
+            <li class="has-submenu"><a href="{{ route('estadistica17.grupos', Auth::user()->cod_car) }}"><i class="ion-stats-bars"></i> <span class="nav-label">Estadísticas 2017-II</span><span class="badge bg-success">Nuevo</span></a></li>
         @endif
 
         @if(Auth::user()->type == 'teacher')
             <li><a href="{{ route('perfild.index') }}"><i class="ion-briefcase"></i> <span class="nav-label">Ver mi Perfil</span><span class="badge bg-success">Nuevo</span></a></li>
+            <li class="has-submenu"><a href="{{ route('plan.index')  }}"><i class="ion-document-text"></i> <span class="nav-label">Plan de Tutoría</span><span class="badge bg-success">Nuevo</span></a></li>
             <li><a href="{{ route('estugrupo.index') }}"><i class="ion-ios-people"></i> <span class="nav-label">Lista de Tutorados</span></a></li>
             <li><a href="{{ route('sesindi17.index') }}"><i class="ion-compose"></i> <span class="nav-label">Sesión de Tutoria Individual</span><span class="badge bg-success">Nuevo</span></a></li>
             <li><a href="{{ route('seguimiento.index')  }}"><i class="ion-document-text"></i> <span class="nav-label">Seguimiento a tutorados referidos</span><span class="badge bg-success">Nuevo</span></a></li>
@@ -33,11 +36,8 @@
         @if(Auth::user()->type == 'student')
             <li><a href="{{ route('perfile.index') }}"><i class="ion-briefcase"></i> <span class="nav-label">Ver mi Perfil</span><span class="badge bg-success">Nuevo</span></a></li>
             <li><a href="{{ route('docgrupo.index') }}"><i class="ion-person"></i> <span class="nav-label">Ver mi Tutor</span><span class="badge bg-success">Nuevo</span></a></li>
-            <li class="has-submenu"><a href="#"><i class="ion-university"></i> <span class="nav-label">Reportes de Tutoría</span></a>
-                <ul class="list-unstyled">
-                    <li><a href="{{ route('encusati.index') }}"><i class="ion-compose"></i> Constancia de Tutoría</a></li>
-                </ul>
-            </li>
+            <li><a href="{{ route('encusati.index') }}"><i class="ion-compose"></i> <span class="nav-label"> Constancia de Tutoría</span><span class="badge bg-success">Nuevo</span></a></li>
+            
         @endif
 
         @if(Auth::user()->type == 'psico')
@@ -56,6 +56,7 @@
         @endif
         @if(Auth::user()->type == 'vice' or Auth::user()->type == 'query')
             <li class="has-submenu"><a href="{{ route('estadistica.index') }}"><i class="ion-stats-bars"></i> <span class="nav-label">Estadísticas</span></a></li>
+            <li class="has-submenu"><a href="{{ route('estadistica17.index') }}"><i class="ion-stats-bars"></i> <span class="nav-label">Estadísticas 2017-II</span></a></li>
         @endif
             <li class="has-submenu"><a href="{{ route('auth.logout') }}"><i class="ion-log-out"></i> <span class="nav-label">Salir del Sistema</span></a></li>
         </ul>

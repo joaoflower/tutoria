@@ -26,8 +26,8 @@ use Laracasts\Flash\Flash;
 
 class EncusatiController extends Controller
 {
-	private $ano_aca = '2017';
-	private $per_aca = '02';    
+	private $ano_aca = '2018';
+	private $per_aca = '01';    
     private $name;
     private $sesindi17;
     private $cod_prf;

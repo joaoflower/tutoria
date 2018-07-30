@@ -37,18 +37,20 @@
 }
 
 .dashboard-body {
-    font-size: 50px;
+    font-size: 20px;
+    text-align: left;
+    color: #F44;
+}
+.dashboard-body p {
+    padding-left: 50px;
+}
+.dashboard-body a {
+    text-decoration: none;
+    color:#4D4D4D;
+}
+.dashboard-body a:hover {
+    font-weight: 700;
 }
 .dashboard-header {
     font-size: 40px;
-}
-
-body {
-	background-color: #f8f8f8;
-}
-.navbar-default {
-    background-color: #fff;
-}
-.panel-footer {
-    background-color: #fff;
 }

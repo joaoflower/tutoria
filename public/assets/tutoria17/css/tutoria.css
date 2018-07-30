@@ -180,6 +180,15 @@ table.dataTable tbody td {
 /*---------tutorados---------------*/
 .panel-tutorado {
   padding: 10px 20px;
+  /*background-color: #FFA9A9;*/
+}
+.panel-tutorado-riesgo {
+  padding: 10px 20px;
+  background-color: #FFA9A9;
+}
+.info > h3 {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 .hr-tutorado {
   margin-top: 10px;
@@ -230,4 +239,17 @@ textarea.form-control {
 }
 .btn-icon-table span {
   font-size: 13px;
+}
+/*---------- Semaforo estadísticas ---------------*/
+.td-esta {
+  text-align: center;
+}
+.td-red {
+  background-color: #FFCACA;  
+}
+.td-green {
+  background-color: #CAFFDD;
+}
+.td-orange {
+  background-color: #FFEFCA;
 }

@@ -53,6 +53,9 @@ $(function(){
 
         getAtencionref( $(this).data('atencionref-id') );
 
+        $("#asi_est").val("ASISTIO");
+        $("#fecha").prop('required', true);
+        $("#fecha").prop('disabled', false);
         $("#fecha").val("");
         $("#recomendacion").val("");
         $('#div-recomendacion').summernote("code", "");
@@ -91,6 +94,10 @@ $(function(){
 
         $("#store-seguimiento").css("display","none");
         $("#update-seguimiento").css("display","inline-block");
+
+        $("#asi_est").val("");
+        $("#fecha").prop('required', true);
+        $("#fecha").prop('disabled', false);
 
         $("#teacher-seguimiento").modal();
     }
@@ -163,4 +170,20 @@ $(function(){
     $(".edit-seguimiento").on( "click", editSeguimiento );
     $("#update-seguimiento").on( "click", updateSeguimiento );
     $(".drop-seguimiento").on( "click", dropSeguimiento );
-});
+
+    // Asistencia
+    $("#asi_est").change(event => { 
+        if($("#asi_est").val() == 'ASISTIO') {
+            $("#fecha").prop('required', true);
+            $("#fecha").prop('disabled', false);
+            $("#recomendacion").val("");
+            $('#div-recomendacion').summernote("code", "");
+        } else {
+            $("#fecha").val("");
+            $("#fecha").prop('required', false);
+            $("#fecha").prop('disabled', true);
+            $("#recomendacion").val("El estudiante no ASISTIO y las acciones de convocatoria fueron ");
+            $('#div-recomendacion').summernote("code", "El estudiante no ASISTIO y las acciones de convocatoria fueron ");
+        }
+    });
+}); 

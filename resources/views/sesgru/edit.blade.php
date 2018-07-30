@@ -108,7 +108,7 @@
             //addRemoveLinks: true,
             //dictRemoveFile: 'Borrar foto',
             paramName: "file", 
-            maxFilesize: 4, 
+            maxFilesize: 10, 
             acceptedFiles: "image/*",
             init: function() {
                 var myDropzone = this;

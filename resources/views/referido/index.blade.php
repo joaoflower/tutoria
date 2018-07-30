@@ -36,6 +36,33 @@
                                                     </div> 
                                                 </div> 
                                             </div>
+                                            <div class="row"> 
+                                                <div class="col-md-12"> 
+                                                    <div class="form-group no-margin"> 
+                                                        
+                                                        <table class="table table-striped table-bordered table-hover ">
+                                                            <thead>
+                                                                <tr class="success">
+                                                                    <th colspan="2"><strong>El estudiante requiere ser referido a:</strong></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            @foreach ($itemreferidos as $itemreferido)
+                                                                <tr>
+                                                                    <td>{{ $itemreferido->name }}</td>
+                                                                    <td>
+                                                                        <label class="cr-styled">
+                                                                            {!! Form::checkbox( 'sesindi17_ref['.$itemreferido->id.']', $itemreferido->id, false, ['class' => 'si17-ref'] ) !!} <i class="fa"></i>
+                                                                        </label>                                                     
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                        
+                                                    </div> 
+                                                </div> 
+                                            </div>
 
                                         </div> 
                                         <div class="modal-footer"> 

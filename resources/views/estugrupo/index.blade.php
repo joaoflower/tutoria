@@ -12,7 +12,11 @@
 
         @foreach ($estugrupos as $estugrupo)
             <div class="col-sm-6">
+            @if ($estugrupo->riesgo)    
+                <div class="panel panel-tutorado-riesgo">
+            @else
                 <div class="panel panel-tutorado">
+            @endif
                     <div class="panel-body p-t-0">
                         <div class="media-main">
                             <a class="pull-left" href="#">
@@ -26,6 +30,9 @@
                             <div class="info">
                                 <h4>{{ ucwords(strtolower($estugrupo->name)) }}</h4>
                                 <p class="text-muted">{{ $estugrupo->num_mat }} - {{ ucwords(strtolower($estugrupo->car_des)) }}</p>
+                            @if ($estugrupo->riesgo)
+                                <h3>Estudiante en Riesgo</h3>
+                            @endif
                             </div>
                         </div>
                         <div class="clearfix"></div>

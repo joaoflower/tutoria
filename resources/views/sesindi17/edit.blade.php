@@ -104,7 +104,7 @@
                                     <a href="{{ route('sesindi17.index') }}" class="btn btn-danger btn-rounded btn-custom btn-lg m-b-5">
                                         <i class="fa fa-times"></i> <span>Cancelar</span>
                                     </a>
-                                    {!! Form::button('<i class="fa fa-floppy-o"></i> <span>Modifiar sesión</span>', ['type' => 'submit', 'class' => 'btn btn-info btn-rounded btn-custom btn-lg m-b-5']) !!}  
+                                    {!! Form::button('<i class="fa fa-floppy-o"></i> <span>Modificar sesión</span>', ['type' => 'submit', 'class' => 'btn btn-info btn-rounded btn-custom btn-lg m-b-5']) !!}  
                                 </div>
                             </div>
                         {!! Form::close() !!}
@@ -120,7 +120,7 @@
     <script type="text/javascript">
         $(document).on('ready', function(){ 
             $('#div-pro_ide').summernote({
-                placeholder: 'Ingrese OTROS problemas identificados por el estudiante.',
+                placeholder: 'Ingrese OTROS problemas identificados por el estudiante y Otras ACCIONES DE ACOMPAÑAMIENTO realizadas por el tutor.',
                 disableDragAndDrop: true,
                 height: 200, 
                 minHeight: 50, 

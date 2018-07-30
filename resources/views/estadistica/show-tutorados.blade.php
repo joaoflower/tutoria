@@ -9,7 +9,7 @@
                 <div class="portlet">
                     <div class="portlet-heading bg-primary">
                         <h3 class="portlet-title">
-                            Estadística de Tutorados del Tutor: {{ ucwords(strtolower($docente->paterno.' '.$docente->materno.', '.$docente->nombres)) }}
+                            Estadística de Tutorados del Tutor: {{ ucwords(strtolower($docente->paterno.' '.$docente->materno.', '.$docente->nombres)) }} 2018-I
                         </h3>
                         <div class="portlet-widgets">
                             <a href="#" data-toggle="remove"><i class="ion-close-round"></i></a>

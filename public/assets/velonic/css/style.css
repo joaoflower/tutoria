@@ -66,8 +66,8 @@ html {
 
 /******** 2. Left Panel (aside navigation) ********/
 aside.left-panel {
-  background-color: #2f353f;
-  box-shadow: 7px 60px 12px rgba(0, 0, 0, 0.15);
+  background-color: #ffffff;
+  box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.05);
   width: 250px;
   position: fixed;
   height: 100%;
@@ -111,7 +111,7 @@ aside.left-panel.lg + .content {
 /******** 2.2 Navigation *******/
 
 .navigation {
-  margin: 50px 0px 20px;
+  margin: 30px 0px 20px;
 }
 
 .navigation > ul > li {
@@ -151,8 +151,8 @@ aside.left-panel.collapsed .navigation > ul > li > a .badge {
 .navigation > ul > li:hover > a,
 .navigation > ul > li.active:hover > a,
 .navigation > ul > li.active > a{
-  color: #fff;
-  background: #2A303A;
+  color: #2F353F;
+  background: #E6EBEC;
 }
 
 .navigation ul li a i {
@@ -160,6 +160,7 @@ aside.left-panel.collapsed .navigation > ul > li > a .badge {
   font-size: 18px;
   width: 25px;
   float: left;
+  line-height: 24px;
 }
 
 .navigation ul li a .nav-label {
@@ -174,7 +175,7 @@ aside.left-panel.collapsed .navigation > ul > li > a .badge {
 /*** 2.3 Sub Menu ***/
 .navigation ul li ul {
   display: none;
-  background-color: #272c35;
+  padding-top: 10px;
   padding-bottom: 10px;
 }
 
@@ -198,11 +199,11 @@ aside:not(.collapsed) .navigation ul li.active ul {
 }
 
 .navigation ul li ul li a:hover {
-  color: #ddd;
+  color: #2F353F;
 }
 
 .navigation ul li ul li.active a {
-  color: #eeeeee !important;
+  color: #2F353F !important;
 }
 
 
@@ -1851,8 +1852,33 @@ ul.p-social-link li a {
     text-align: center;
   }
 
+  aside.left-panel.collapsed .menu-arrow {
+    display: none;
+  }
+
+
   aside.left-panel.collapsed + .content {
     margin-left: 75px;
+  }
+
+  aside.left-panel.collapsed + .content header{
+    left: 0px;
+    position: relative;
+  }
+
+  aside.left-panel.collapsed .logo {
+    width: 75px;
+    position: relative;
+  }
+  aside.left-panel.collapsed .navigation{
+    margin: 61px 0px 20px;
+  }
+  aside.left-panel.collapsed + .content .wraper{
+    margin-top: 20px;
+  }
+
+  aside.left-panel.collapsed .navigation ul li ul li a {
+    padding: 8px 25px 8px 30px;
   }
 
   aside.left-panel.collapsed .user .user-login,
@@ -1864,7 +1890,7 @@ aside.left-panel.collapsed span.nav-label {
     padding: 15px;
   }
   aside.left-panel.collapsed .navigation > ul > li > a:hover {
-    background-color: #272c35;
+    background-color: #E6EBEC;
   }
 
   aside.left-panel.collapsed i.fa {
@@ -1883,7 +1909,7 @@ aside.left-panel.collapsed span.nav-label {
     z-index: 3;
     left: 100%;
     top: 0px;
-    background-color: #272c35;
+    background-color: #E6EBEC;
     box-shadow: none;
     padding: 10px 0px;
     min-width: 200px;
@@ -1900,9 +1926,6 @@ aside.left-panel.collapsed span.nav-label {
     padding: 8px 25px 8px 40px;
   }
 
-  aside.left-panel.collapsed .navigation ul li ul li a:hover {
-    color: #fff;
-  }
 }
 @media (max-width: 768px) {
     
@@ -1910,15 +1933,11 @@ aside.left-panel.collapsed span.nav-label {
     width: 250px;
     left: 0px;
     overflow: hidden !important;
+    z-index: 99;
   }
 
   aside.left-panel.collapsed + .content {
     margin-left: 0px;
-    transform: translate3d(250px, 0px, 0px);
-    -ms-transform: translate3d(250px, 0px, 0px);
-    -webkit-transform: translate3d(250px, 0px, 0px);
-    -moz-transition: translate3d(250px, 0px, 0px);
-    -o-transition: translate3d(250px, 0px, 0px);
   }
 
   aside.left-panel {
@@ -1939,6 +1958,12 @@ aside.left-panel.collapsed span.nav-label {
   }
   .footer {
     left: 0px;
+  }
+  header {
+    left: 0px;
+  }
+  .navigation ul li a i {
+    float: left !important;
   }
 }
 

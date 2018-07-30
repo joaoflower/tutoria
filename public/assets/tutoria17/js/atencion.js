@@ -8,7 +8,7 @@ $(function(){
 	$('#div-recomendacion').summernote({
         placeholder: 'Ingrese recomendacion para el docente',
         disableDragAndDrop: true,
-        height: 150, 
+        height: 100, 
         minHeight: 50, 
         maxHeight: 200, 
         lang: 'es-ES',
@@ -61,10 +61,18 @@ $(function(){
         $("#fecha").prop('disabled', true);
         $('#div-recomendacion').summernote("disable");
 
+        $('.si17-ref').prop('checked', false);
+        //$('input[type=checkbox]').prop('cheched', false);
+
         $("#oficina-atencion").modal();        		
     }
     function storeAtencion( event ) {
-        var data = { 'sesindiref_id': $("#referido-id").val(), 'atendido': $("#atendido").val(), 'fecha': $("#fecha").val(), 'recomendacion': $("#recomendacion").val()};
+        var sesindi17_ref = [];
+        $('.si17-ref:checked').each(function(i, e) {
+            sesindi17_ref.push($(this).val());
+        });
+
+        var data = { 'sesindiref_id': $("#referido-id").val(), 'atendido': $("#atendido").val(), 'fecha': $("#fecha").val(), 'recomendacion': $("#recomendacion").val(), 'sesindi17_ref': sesindi17_ref};
         $.post("atencion/storeatencion", data)
             .done( function(response, status) {   
                 swal({

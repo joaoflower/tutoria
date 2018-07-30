@@ -37,8 +37,9 @@
                                             </div>
                                             <div class="row"> 
                                                 <div class="col-md-3"> 
-                                                    <div class="form-group no-margin"> 
-                                                         {!! Form::input('date','fecha', null, ['class' => 'form-control fechas', 'required', 'placeholder' => 'Fecha', 'id' => 'fecha']) !!}
+                                                    <div class="form-group no-margin">
+                                                        {!! Form::select('asi_est', ['ASISTIO' => 'Asistio', 'NO ASISTIO' => 'No asistio'], null, ['class' => 'form-control', 'required', 'id' => 'asi_est']) !!}
+                                                        {!! Form::input('date','fecha', null, ['class' => 'form-control fechas', 'required', 'placeholder' => 'Fecha', 'id' => 'fecha']) !!}
                                                     </div> 
                                                 </div> 
                                                 <div class="col-md-9"> 
@@ -134,5 +135,5 @@
   
 @endsection
 @section('js')
-<script src="{{ asset('assets/tutoria17/js/seguimiento.js') }}"></script>
+<script src="{{ asset('assets/tutoria17/js/seguimiento.js') }}"></script> 
 @endsection

@@ -14,11 +14,12 @@ use tutoria\Carrera;
 use tutoria\Tutor;
 use tutoria\Tutorado;
 use tutoria\Estugrupo;
+use tutoria\Esturiesgo;
 
 class EstugrupoController extends Controller
 {
-    private $ano_aca = '2017';
-	private $per_aca = '02';
+    private $ano_aca = '2018';
+	private $per_aca = '01';
     private $tutor;
 
     public function __construct()
@@ -38,6 +39,13 @@ class EstugrupoController extends Controller
                         $estugrupo->name = $estugrupo->estu->paterno.' '.$estugrupo->estu->materno.', '.$estugrupo->estu->nombres;
 
                         $estugrupo->car_des = $estugrupo->estu->car_des;
+                        # Estudiantes en riesgo
+                        $riesgo = Esturiesgo::find($estugrupo->num_mat);
+                        if($riesgo == null) {
+                            $estugrupo->riesgo = false;
+                        } else {
+                            $estugrupo->riesgo = true;
+                        }                        
                     });
                     $estugrupos = $estugrupos->sortBy(function($estugrupo) {
                         return $estugrupo->name;

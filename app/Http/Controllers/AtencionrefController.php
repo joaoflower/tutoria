@@ -23,8 +23,8 @@ use tutoria\Atencionref;
 
 class AtencionrefController extends Controller
 {
-	private $ano_aca = '2017';
-	private $per_aca = '02';
+	private $ano_aca = '2018';
+	private $per_aca = '01';
 
     public function __construct()
     {
@@ -36,8 +36,13 @@ class AtencionrefController extends Controller
             case 4591:  $referidoTo = array(10); break;  # Pastoral
             case 4592:  $referidoTo = array(1); break; # Psicopedagogia
             case 7425:  $referidoTo = array(2, 3, 4, 5); break; # Bienestar Universitario
+            case 8544:  $referidoTo = array( 11 ); break; # Defensoría del estudiante
+            case 8545:  $referidoTo = array( 12 ); break; # Responsabilidad Social
+            case 8546:  $referidoTo = array( 13 ); break; # Consultorio Juridico
             default: $referidoTo = array(0); break;
         }
+        # Falta implementar tablas para las oficinas y referidos
+
         # Obteniendo estudiantes referidos
         $id = Auth::user()->id;
         $grupos = Grupo::select('id', 'cod_prf', 'cod_car')

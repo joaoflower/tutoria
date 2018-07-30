@@ -175,12 +175,12 @@
 	Route::post('comunica/getcomunicado', 'ComunicadoController@getComunicado')->name('comunica.getcomunicado');
 	Route::post('comunica/updatecomunicado', 'ComunicadoController@updateComunicado')->name('comunica.updatecomunicado');
 	Route::post('comunica/dropcomunicado', 'ComunicadoController@dropComunicado')->name('comunica.dropcomunicado');
-	#-----------------------------------------------------
-	Route::resource('encusati', 'EncusatiController');
-	Route::get('encusati/{id}/destroy', [
-		'uses'	=> 'EncusatiController@destroy',
+	#----------- Encuesta de Satisfacción y Constancia -----------------------------------------
+	Route::resource('encusati', 'Encusati18Controller');
+	/*Route::get('encusati/{id}/destroy', [
+		'uses'	=> 'Encusati18Controller@destroy',
 		'as'	=> 'encusati.destroy'
-		]);
+		]);*/
 
 	Route::resource('sesuna', 'SesunaController');
 	Route::get('sesuna/{id}/destroy', [
@@ -243,6 +243,12 @@
 
 	/*Route::get('grupo/{id}/{num_mat}/tutorado', 'GrupoController@addEstugrupo');
 	Route::get('grupo/{grupo_id}/{id}/deltutorado', 'GrupoController@delEstugrupo');*/
+
+	#---------------------------------------------------
+	Route::resource('estadistica17', 'Estadistica17Controller');
+	Route::get('estadistica17/{cod_car}/grupos', 'Estadistica17Controller@showGrupos')->name('estadistica17.grupos');
+	Route::get('estadistica17/{cod_car}/plan', 'Estadistica17Controller@showPlan')->name('estadistica17.plan');
+	Route::get('estadistica17/{grupo_id}/tutorados', 'Estadistica17Controller@showTutorados')->name('estadistica17.tutorados');
 
 #});
 

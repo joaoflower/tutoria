@@ -22,15 +22,30 @@
                         {!! Form::open(['route' => 'sesindi17.store', 'method' => 'POST', 'class' => 'form-horizontal']) !!}
                             <div class="form-group">
                                 {!! Form::label('estugrupo_id', 'Tutorado: ', ['class' => 'col-md-1 control-label']) !!}
-                                <div class="col-sm-9">
+                                <div class="col-sm-7">
                                     {!! Form::select('estugrupo_id', $estudiantes, null, ['class' => 'form-control select-estudiante', 'required', 'data-placeholder' => 'Selecione Tutorado para sessión']) !!}
                                 </div>
-                                <div class="col-sm-2"></div>
+                                <div class="col-sm-1">
+                                    <p class="form-control-static"><strong>Asistencia:</strong></p>
+                                </div>
+                                <div class="col-sm-2">
+                                    {!! Form::select('asi_est', ['ASISTIO' => 'Asistio', 'NO ASISTIO' => 'No asistio'], null, ['class' => 'form-control', 'required', 'id' => 'asi_est']) !!}
+                                </div>
+                                <div class="col-sm-1"></div>
+                            </div>
+                            <div class="form-group" id="div-acc_tut">
+                                <div class="col-sm-1">
+                                    <p class="form-control-static" id="lbl-acc_tut" style="display: none;"><strong>Acciones:</strong></p>
+                                </div>
+                                <div class="col-sm-10">
+                                    {!! Form::textarea('acc_tut', null, ['class' => 'form-control', 'placeholder' => 'Ingrese las acciones que realizo para la convocatoria del estudiante', 'id' => 'acc_tut', 'rows' => '2', 'style' => 'display: none;']) !!}
+                                </div>
+                                <div class="col-sm-1"></div>
                             </div>
                             <div class="form-group">                                
                                 <div class="col-sm-1"></div>
                                 <div class="col-sm-11">
-                                    <p class="form-control-static"><strong>PROBLEMAS IDENTIFICADOS POR EL ESTUDIANTE</strong></p>
+                                    <p class="form-control-static"><strong>PROBLEMAS IDENTIFICADOS POR EL ESTUDIANTE :</strong></p>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -115,7 +130,7 @@
                 allow_single_deselect: true
             });
             $('#div-pro_ide').summernote({
-                placeholder: 'Ingrese OTROS problemas identificados por el estudiante.',
+                placeholder: 'Ingrese OTROS problemas identificados por el estudiante y Otras ACCIONES DE ACOMPAÑAMIENTO realizadas por el tutor.',
                 disableDragAndDrop: true,
                 height: 200, 
                 minHeight: 50, 
@@ -131,6 +146,18 @@
             });
             $('#div-pro_ide').on('summernote.blur', function() {
                 $("#pro_ide").val($(this).summernote("code"));    
+            });
+            // Asistencia
+            $("#asi_est").change(event => { 
+                if($("#asi_est").val() == 'ASISTIO') {
+                    //$("#div-acc_tut").css("display","none"); 
+                    $("#acc_tut").val( "" );
+                    $("#lbl-acc_tut").css("display","none"); 
+                    $("#acc_tut").css("display","none"); 
+                } else {                
+                    $("#acc_tut").css("display","inline-block");                     
+                    $("#lbl-acc_tut").css("display","inline-block");                     
+                }
             });
         }); 
     </script>
